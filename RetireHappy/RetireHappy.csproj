@@ -248,6 +248,8 @@
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\RetireHappy - Web Deploy.pubxml" />
     <Content Include="Scripts\flot-data.js" />
     <Content Include="Scripts\flot\.bower.json" />
