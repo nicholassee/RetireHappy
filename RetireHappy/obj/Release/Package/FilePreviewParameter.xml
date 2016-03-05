@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="RetireHappy" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="RetireHappy/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="RetireHappyDB-Web.config Connection String" description="" value="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\RetireHappyDB.mdf;Initial Catalog=RetireHappyDB;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='RetireHappyDB']/@connectionString" />
+  </parameter>
+</parameters>

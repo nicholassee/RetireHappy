@@ -1,0 +1,67 @@
+﻿@model RetireHappy.Models.SavingsInfo
+
+@{
+    ViewBag.Title = "computeSavingsInfo";
+}
+
+<h1 class="page-header">Retirement Calculator</h1>
+
+<p><strong>Step 4! Done!</strong></p>
+
+<div>
+    <hr />
+    <h4>Your ideal monthly savings should be...</h4>
+    <div class="col-md-10">
+
+        <div class="panel @ViewBag.riskClass">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-tasks fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            @Html.DisplayFor(model => model.calcRetSavings)</div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-10">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.riskLevel)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.riskLevel)
+            </dd>
+            <dd>
+                <p>Risk level indicates how likely you are not able to meet the ideal savings with your current monthly savings amount</p>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.diffPercent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.diffPercent)
+            </dd>
+            <dd>
+                <p> This percentage figure shown is the percentage you lack or surplus in meeting the ideal savings amount with your current monthly savings amount </p>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.expPercent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.expPercent)
+            </dd>
+            <dd>
+                <p>Expenditure percentage indicates the percentage of your monthly income that has been used in expenditure spendings</p>
+            </dd>
+
+
+        </dl>
+    </div>
+</div>

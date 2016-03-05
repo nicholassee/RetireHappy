@@ -1,0 +1,92 @@
+﻿@model RetireHappy.Models.User
+
+@{
+    ViewBag.Title = "Calculator Step 2";
+}
+<h1 class="page-header">Retirement Calculator</h1>
+
+<p><strong>Step 2</strong></p>
+
+@using (Html.BeginForm("CalculatorStep2", "Users"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.age, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.monIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.monIncome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.monIncome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.curSavingAmt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.curSavingAmt, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.curSavingAmt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @* added *@
+        <div class="form-group">
+          
+            @Html.LabelFor(model => model.avgMonExpenditure, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButton("Gender", "Male", new { @checked = true})
+                
+                @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
+                <br />
+                @Html.RadioButton("Gender", "Male")
+                <Label>Choose from national average list</Label>  
+            </div>
+        </div>      
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inflationRate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    List<SelectListItem> listItems = new List<SelectListItem>();
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "1.5",
+                        Value = "1.5"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "2.0",
+                        Value = "2.0",
+                        Selected = true
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "2.5",
+                        Value = "2.5"
+                    });
+                }
+
+                @Html.DropDownListFor(model => model.inflationRate, listItems, "-- Select Inflation Rate --")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Next" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+                    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

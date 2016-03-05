@@ -1,0 +1,151 @@
+﻿@model RetireHappy.Models.Report
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!-- Flot Charts JavaScript -->
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/excanvas.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.pie.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.resize.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.time.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.tooltip.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.categories.js")"></script>
+
+    <script>
+    $(document).ready(function() {
+        console.log("document ready");
+        var offset = 0;
+
+        //Flot Pie Chart
+        $(function () {
+
+            var data = [{
+                label: "Below 25",
+                data: @Html.DisplayFor(model => model.ageRange_below_25)
+            }, {
+                label: "25 - 34",
+                data: @Html.DisplayFor(model => model.ageRange_25_34)
+            }, {
+                label: "35 - 44",
+                data: @Html.DisplayFor(model => model.ageRange_35_44)
+            }, {
+                label: "45 - 54",
+                data: @Html.DisplayFor(model => model.ageRange_45_54)
+            }, {
+                label: "55 - 64",
+                data: @Html.DisplayFor(model => model.ageRange_55_64)
+            }];
+
+            var plotObj = $.plot($("#flot-pie-chart"), data, {
+                series: {
+                    pie: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    /*content: "%p.0%, %s", // show percentages, rounding to 2 decimal places*/
+                    content: "S$%y.0, %s", // show value to 0 decimals
+                    shifts: {
+                        x: 20,
+                        y: 0
+                    },
+                    defaultTheme: false
+                }
+            });
+
+        });
+
+
+        //Flot Bar Chart
+
+        $(function() {
+
+            var barOptions = {
+                series: {
+                    bars: {
+                        show: true,
+                        barWidth: 0.6,
+                        align: "center"
+                    }
+                },
+                xaxis: {
+                    mode: "categories",
+                    tickLength: 0
+                },
+                grid: {
+                    hoverable: true
+                },
+                legend: {
+                    show: true
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: "S$%y"
+                }
+            };
+
+            var barData = {
+                label: "Average Monthly Retirement Savings",
+                data: [
+                    ["Below 1000", @Html.DisplayFor(model => model.inc_below_1000)],
+                    ["1001 - 2000", @Html.DisplayFor(model => model.inc_1001_2000)],
+                    ["2001 - 3000", @Html.DisplayFor(model => model.inc_2001_3000)],
+                    ["3001 - 4000", @Html.DisplayFor(model => model.inc_3001_4000)],
+                    ["4001 - 5000", @Html.DisplayFor(model => model.inc_4001_5000)],
+                    ["5001 - 6000", @Html.DisplayFor(model => model.inc_5001_6000)],
+                    ["Above 6000", @Html.DisplayFor(model => model.inc_above_6000)]
+                ]
+            };
+
+            $.plot($("#flot-bar-chart"), [barData], barOptions);
+
+        });
+
+    });
+    </script>
+}
+
+<h2>Statistic</h2>
+
+<!-- /.col-lg-6 -->
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Average Calculated Monthly Retirement Savings for All Users in Income Range
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="flot-chart">
+                <div class="flot-chart-content" id="flot-bar-chart"></div>
+            </div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+
+<!-- /.col-lg-12 -->
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Average Calculated Monthly Retirement Savings for All Users in Age Range
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="flot-chart">
+                <div class="flot-chart-content" id="flot-pie-chart"></div>
+            </div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

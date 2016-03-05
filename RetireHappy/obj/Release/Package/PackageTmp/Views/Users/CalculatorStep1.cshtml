@@ -1,0 +1,87 @@
+﻿@model RetireHappy.Models.User
+
+@{
+    ViewBag.Title = "Calculator Step 1";
+}
+
+@section CSS{
+    <!-- https://gist.github.com/rcotrina94/7828886 -->
+    <style>
+.radio-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+.male{background-image:url(../Content/images/male.png);}
+.female{background-image:url(../Content/images/female.png);}
+
+.radio-selector input:active +.img-radio{opacity: .9;}
+.radio-selector input:checked +.img-radio{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+.img-radio{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:300px;height:210px;
+    -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+       -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+            filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.img-radio:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+            filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+        </style>
+}
+
+<h1 class="page-header">Retirement Calculator</h1>
+
+<p><strong>Step 1</strong></p>
+
+@using (Html.BeginForm("calculatorStep1", "Users"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })*@
+                @*Html.RadioButtonFor(model => model.gender, "Male")*@
+                @*Html.RadioButtonFor(model => model.gender, "Female")*@
+
+                <div class="radio-selector">
+                    
+                    @Html.RadioButtonFor(model => model.gender, "Male", new { @id = "male" })
+                    <label class="img-radio male" for="male"></label>
+                    
+                    @Html.RadioButtonFor(model => model.gender, "Female", new { @id = "female" })
+                    <label class="img-radio female" for="female"></label>
+
+                </div>
+
+                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Next" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
