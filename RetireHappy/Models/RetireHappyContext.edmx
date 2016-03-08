@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RetireHappyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SavingsInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="calcRetSavings" Type="float" />
+          <Property Name="riskLevel" Type="char" MaxLength="255" />
+          <Property Name="expPercent" Type="float" />
+          <Property Name="diffPercent" Type="float" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="age" Type="int" />
+          <Property Name="gender" Type="char" MaxLength="255" />
+          <Property Name="expRetAge" Type="int" />
+          <Property Name="retDuration" Type="int" />
+          <Property Name="monIncome" Type="float" />
+          <Property Name="avgMonExpenditure" Type="float" />
+          <Property Name="curSavingAmt" Type="float" />
+          <Property Name="desiredMonRetInc" Type="float" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="inflationRate" Type="float" />
+        </EntityType>
+        <Association Name="FK__SavingsInfo__Id__44FF419A">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavingsInfo">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RetireHappyDBModelStoreContainer">
+          <EntitySet Name="SavingsInfo" EntityType="Self.SavingsInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__SavingsInfo__Id__44FF419A" Association="Self.FK__SavingsInfo__Id__44FF419A">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="SavingsInfo" EntitySet="SavingsInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RetireHappyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="SavingsInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="calcRetSavings" Type="Double" />
+          <Property Name="riskLevel" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="expPercent" Type="Double" />
+          <Property Name="diffPercent" Type="Double" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__SavingsInfo__Id__44FF419A" FromRole="SavingsInfo" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="gender" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="expRetAge" Type="Int32" />
+          <Property Name="retDuration" Type="Int32" />
+          <Property Name="monIncome" Type="Double" />
+          <Property Name="avgMonExpenditure" Type="Double" />
+          <Property Name="curSavingAmt" Type="Double" />
+          <Property Name="desiredMonRetInc" Type="Double" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="inflationRate" Type="Double" />
+          <NavigationProperty Name="SavingsInfo" Relationship="Self.FK__SavingsInfo__Id__44FF419A" FromRole="UserProfile" ToRole="SavingsInfo" />
+        </EntityType>
+        <Association Name="FK__SavingsInfo__Id__44FF419A">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavingsInfo">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RetireHappyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SavingsInfoes" EntityType="Self.SavingsInfo" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+          <AssociationSet Name="FK__SavingsInfo__Id__44FF419A" Association="Self.FK__SavingsInfo__Id__44FF419A">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="SavingsInfo" EntitySet="SavingsInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RetireHappyDBModelStoreContainer" CdmEntityContainer="RetireHappyDBEntities">
+          <EntitySetMapping Name="SavingsInfoes">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.SavingsInfo">
+              <MappingFragment StoreEntitySet="SavingsInfo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="calcRetSavings" ColumnName="calcRetSavings" />
+                <ScalarProperty Name="riskLevel" ColumnName="riskLevel" />
+                <ScalarProperty Name="expPercent" ColumnName="expPercent" />
+                <ScalarProperty Name="diffPercent" ColumnName="diffPercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="expRetAge" ColumnName="expRetAge" />
+                <ScalarProperty Name="retDuration" ColumnName="retDuration" />
+                <ScalarProperty Name="monIncome" ColumnName="monIncome" />
+                <ScalarProperty Name="avgMonExpenditure" ColumnName="avgMonExpenditure" />
+                <ScalarProperty Name="curSavingAmt" ColumnName="curSavingAmt" />
+                <ScalarProperty Name="desiredMonRetInc" ColumnName="desiredMonRetInc" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="inflationRate" ColumnName="inflationRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

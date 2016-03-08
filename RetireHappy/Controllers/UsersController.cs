@@ -13,7 +13,7 @@ namespace RetireHappy.Controllers
 {
     public class UsersController : Controller
     {
-        private RetireHappyContext db = new RetireHappyContext();
+        private RetireHappyDBEntities db = new RetireHappyDBEntities();
         private UserGateway userGateway = new UserGateway();
 
         // GET: Users
@@ -37,17 +37,17 @@ namespace RetireHappy.Controllers
         // POST: Users/calculatorStep1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalculatorStep1([Bind(Include = "gender")] User user)
+        public ActionResult CalculatorStep1([Bind(Include = "gender")] UserProfile userProfile)
         {
             //If no radio button is selected
-            if (user.gender == null)
+            if (userProfile.gender == null)
             {
                 //Return the same page with error massage
                 return View();
             }
             else
             {
-                Session["gender"] = user.gender;
+                Session["gender"] = userProfile.gender;
             }
 
             return RedirectToAction("CalculatorStep2");
@@ -62,13 +62,13 @@ namespace RetireHappy.Controllers
         // POST: Users/CalculatorStep2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate")] User user)
+        public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate")] UserProfile userProfile)
         {
-            Session["age"] = user.age;
-            Session["monIncome"] = user.monIncome;
-            Session["curSavingAmt"] = user.curSavingAmt;
-            Session["avgMonExpenditure"] = user.avgMonExpenditure;
-            Session["inflationRate"] = user.inflationRate;
+            Session["age"] = userProfile.age;
+            Session["monIncome"] = userProfile.monIncome;
+            Session["curSavingAmt"] = userProfile.curSavingAmt;
+            Session["avgMonExpenditure"] = userProfile.avgMonExpenditure;
+            Session["inflationRate"] = userProfile.inflationRate;
             return RedirectToAction("CalculatorStep3");
         }
 
@@ -81,23 +81,28 @@ namespace RetireHappy.Controllers
         // POST: Users/CalculatorStep3
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalculatorStep3([Bind(Include = "Id, desiredMonRetInc,expRetAge,retDuration")] User user)
+        public ActionResult CalculatorStep3([Bind(Include = "Id, desiredMonRetInc,expRetAge,retDuration")] UserProfile userProfile)
         {
             //last step of user inputs, insert into gateway
-            Session["desiredMonRetInc"] = user.desiredMonRetInc;
-            Session["expRetAge"] = user.expRetAge;
-            Session["retDuration"] = user.retDuration;
-            user.age = (int)Session["age"];
-            user.gender = (string)Session["gender"];
-            user.monIncome = (float)Session["monIncome"];
-            user.avgMonExpenditure = (float)Session["avgMonExpenditure"];
-            user.curSavingAmt = (float)Session["curSavingAmt"];
-            user.desiredMonRetInc = (float)Session["desiredMonRetInc"];
-            user.inflationRate = (float)Session["inflationRate"];
-            user.timestamp = DateTime.Now;
+            Session["desiredMonRetInc"] = userProfile.desiredMonRetInc;
+            Session["expRetAge"] = userProfile.expRetAge;
+            Session["retDuration"] = userProfile.retDuration;
+            // To fix entity framework bug of being unable to cater to multiple temp instance of userProfile model
+            UserProfile newUserProfile = new UserProfile();
+            newUserProfile.desiredMonRetInc = userProfile.desiredMonRetInc;
+            newUserProfile.expRetAge = userProfile.expRetAge;
+            newUserProfile.retDuration = userProfile.retDuration;
+            newUserProfile.age = (int)Session["age"];
+            newUserProfile.gender = (string)Session["gender"];
+            newUserProfile.monIncome = (double)Session["monIncome"];
+            newUserProfile.avgMonExpenditure = (double)Session["avgMonExpenditure"];
+            newUserProfile.curSavingAmt = (double)Session["curSavingAmt"];
+            newUserProfile.desiredMonRetInc = (double)Session["desiredMonRetInc"];
+            newUserProfile.inflationRate = (double)Session["inflationRate"];
+            newUserProfile.timestamp = DateTime.Now;
 
-            userGateway.Insert(user);
-            Session["Id"] = user.Id;
+            userGateway.Insert(newUserProfile);
+            Session["Id"] = newUserProfile.Id;
             //return RedirectToAction("Index");
             return RedirectToAction("ComputeSavingsInfo", "SavingsInfos");
         }
@@ -109,12 +114,12 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            UserProfile userProfile = db.UserProfiles.Find(id);
+            if (userProfile == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userProfile);
         }
 
         // GET: Users/Create
@@ -128,16 +133,16 @@ namespace RetireHappy.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "uId,age,gender,expRetAge,retDuration,monIncome,avgMonExpenditure,calcRetSavings,curSavingAmt,timestamp,password,userName")] User user)
+        public ActionResult Create([Bind(Include = "uId,age,gender,expRetAge,retDuration,monIncome,avgMonExpenditure,calcRetSavings,curSavingAmt,timestamp,password,userName")] UserProfile userProfile)
         {
             if (ModelState.IsValid)
             {
-                db.User.Add(user);
+                db.UserProfiles.Add(userProfile);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(user);
+            return View(userProfile);
         }
 
         // GET: Users/Edit/5
@@ -147,12 +152,12 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            UserProfile userProfiles = db.UserProfiles.Find(id);
+            if (userProfiles == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userProfiles);
         }
 
         // POST: Users/Edit/5
@@ -178,12 +183,12 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            UserProfile userProfile = db.UserProfiles.Find(id);
+            if (userProfile == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userProfile);
         }
 
         // POST: Users/Delete/5
@@ -191,8 +196,8 @@ namespace RetireHappy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            User user = db.User.Find(id);
-            db.User.Remove(user);
+            UserProfile userProfile = db.UserProfiles.Find(id);
+            db.UserProfiles.Remove(userProfile);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

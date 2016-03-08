@@ -13,41 +13,41 @@ namespace RetireHappy.Controllers
 {
     public class SavingsInfosController : Controller
     {
-        private RetireHappyContext db = new RetireHappyContext();
+        private RetireHappyDBEntities db = new RetireHappyDBEntities();
         private SavingInfosGateway savingInfosGateway = new SavingInfosGateway();
 
         // GET: SavingsInfos
         public ActionResult Index()
         {
-            return View(db.SavingsInfos.ToList());
+            return View(db.SavingsInfoes.ToList());
         }
 
         // method to receive and compute savingsinfo
         // GET: SavingsInfos/computeSavginsInfo
         public ActionResult ComputeSavingsInfo()
         {
-            float avgMonExpenditure = (float)Session["avgMonExpenditure"];
-            float monIncome = (float)Session["monIncome"];
+            double avgMonExpenditure = (double)Session["avgMonExpenditure"];
+            double monIncome = (double)Session["monIncome"];
             // assuming a fixed rate of 2.4% inflation rate
-            float inflationRate = ((float)Session["inflationRate"] / 100) + 1;
+            double inflationRate = ((double)Session["inflationRate"] / 100) + 1;
             int currentAge = (int)Session["age"];
             int expRetAge = (int)Session["expRetAge"];
             int retDuration = (int)Session["retDuration"];
             int limit = expRetAge + retDuration;
-            float curSavingAmt = (float)Session["curSavingAmt"];
-            float desiredMonRetInc = (float)Session["desiredMonRetInc"];
+            double curSavingAmt = (double)Session["curSavingAmt"];
+            double desiredMonRetInc = (double)Session["desiredMonRetInc"];
             SavingsInfo savingsInfo = new SavingsInfo();
 
             //float pvAsOfRetAge = computeRiskLevel(expRetAge, currentAge, desiredMonRetInc, inflationRate, retDuration);
 
             // calculate PV as of current age
             //float pvAsOfCurAge = (float)(pvAsOfRetAge / Math.Pow((1 + 0.01), (expRetAge - currentAge)));
-            float calcRetSavings = savingsInfo.calculate(expRetAge, currentAge, desiredMonRetInc, inflationRate, retDuration);
+            double calcRetSavings = savingsInfo.calculate(expRetAge, currentAge, desiredMonRetInc, inflationRate, retDuration);
             // calculate monthly savings using PV as of current age
             //float calcRetSavings = pvAsOfCurAge / ((expRetAge - currentAge) * 12);
 
             // to calculate risk level using inflation adjusted current monthly savings
-            float riskLevelDiff = savingsInfo.computeRiskLevel(calcRetSavings, curSavingAmt);
+            double riskLevelDiff = savingsInfo.computeRiskLevel(calcRetSavings, curSavingAmt);
             //float riskLevelDiff = ((calcRetSavings - curSavingAmt) / curSavingAmt) * 100;
 
 
@@ -66,10 +66,10 @@ namespace RetireHappy.Controllers
                 savingsInfo.riskLevel = "High Risk";
                 ViewBag.riskClass = "panel-red";
             }
-            savingsInfo.diffPercent = (float)Math.Round(riskLevelDiff, 2);
-            savingsInfo.calcRetSavings = (float)Math.Round(calcRetSavings, 2);
+            savingsInfo.diffPercent = Math.Round(riskLevelDiff, 2);
+            savingsInfo.calcRetSavings = Math.Round(calcRetSavings, 2);
             savingsInfo.Id = (int)Session["Id"];
-            savingsInfo.expPercent = (float)Math.Round( (avgMonExpenditure / monIncome) * 100, 2);
+            savingsInfo.expPercent = Math.Round( (avgMonExpenditure / monIncome) * 100, 2);
             savingInfosGateway.Insert(savingsInfo);
             return View(savingsInfo);
         }
@@ -96,7 +96,7 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SavingsInfo savingsInfo = db.SavingsInfos.Find(id);
+            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
             if (savingsInfo == null)
             {
                 return HttpNotFound();
@@ -119,7 +119,7 @@ namespace RetireHappy.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.SavingsInfos.Add(savingsInfo);
+                db.SavingsInfoes.Add(savingsInfo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -134,7 +134,7 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SavingsInfo savingsInfo = db.SavingsInfos.Find( Convert.ToInt32(id) );
+            SavingsInfo savingsInfo = db.SavingsInfoes.Find( Convert.ToInt32(id) );
             if (savingsInfo == null)
             {
                 return HttpNotFound();
@@ -165,7 +165,7 @@ namespace RetireHappy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SavingsInfo savingsInfo = db.SavingsInfos.Find(id);
+            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
             if (savingsInfo == null)
             {
                 return HttpNotFound();
@@ -178,8 +178,8 @@ namespace RetireHappy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            SavingsInfo savingsInfo = db.SavingsInfos.Find(id);
-            db.SavingsInfos.Remove(savingsInfo);
+            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
+            db.SavingsInfoes.Remove(savingsInfo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

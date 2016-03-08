@@ -4,17 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using RetireHappy.Models;
 
 namespace RetireHappy.DAL
 {
     public class CommonGateway<T> : ICommonGateway<T> where T : class
     {
-        internal RetireHappyContext db = new RetireHappyContext();
+        internal RetireHappyDBEntities db = new RetireHappyDBEntities();
         internal DbSet<T> data = null;
 
         public CommonGateway()
         {
-            this.data = db.Set<T>();
+            data = db.Set<T>();
         }
 
         public T Delete(int? id)
@@ -46,6 +47,10 @@ namespace RetireHappy.DAL
                         Console.WriteLine("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 

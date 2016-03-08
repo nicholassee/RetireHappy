@@ -6,7 +6,7 @@ using RetireHappy.Models;
 
 namespace RetireHappy.DAL
 {
-    public class UserGateway : CommonGateway<User>
+    public class UserGateway : CommonGateway<UserProfile>
     {
     }
 }
