@@ -11,9 +11,9 @@
           </Key>
           <Property Name="eId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="category" Type="varchar" MaxLength="255" />
+          <Property Name="type" Type="varchar" MaxLength="255" />
           <Property Name="recordYear" Type="datetime" />
           <Property Name="avgAmount" Type="float" />
-          <Property Name="count" Type="int" />
         </EntityType>
         <EntityType Name="SavingsInfo">
           <Key>
@@ -123,7 +123,7 @@
           <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="recordYear" Type="DateTime" Precision="3" />
           <Property Name="avgAmount" Type="Double" />
-          <Property Name="count" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -162,7 +162,7 @@
           <EntitySetMapping Name="AvgExpenditures">
             <EntityTypeMapping TypeName="RetireHappyDBModel.AvgExpenditure">
               <MappingFragment StoreEntitySet="AvgExpenditure">
-                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="avgAmount" ColumnName="avgAmount" />
                 <ScalarProperty Name="recordYear" ColumnName="recordYear" />
                 <ScalarProperty Name="category" ColumnName="category" />

@@ -44,16 +44,35 @@ namespace RetireHappy.Controllers
             xlWorkBook = xlApp.Workbooks.Open(path);
             xlWorkSheet = xlWorkBook.Sheets[4];
             range = xlWorkSheet.UsedRange;
-            for(int row = 5; row <= range.Rows.Count; row++)
+            string tempCategory ="";
+            // assuming row starts from 9 and column for category and type is in 1 and figure is in column 2
+            for(int row = 9; row <= range.Rows.Count; row++)
             {
-                if(((Excel.Range)range.Cells[row, 1]).Text == "FOOD AND NON-ALCOHOLIC BEVERAGES")
+                string temp = ((Excel.Range)range.Cells[row, 1]).Text;
+                if (string.IsNullOrEmpty(temp))
                 {
-                    AvgExpenditure avgExpenditure = new AvgExpenditure();
-                    avgExpenditure.category = ((Excel.Range)range.Cells[row, 1]).Text;
-                    avgExpenditure.avgAmount = double.Parse(((Excel.Range)range.Cells[row, 2]).Text);
-                    avgExpenditure.count = 0;
-                    avgExpenditure.recordYear = System.DateTime.Now;
-                    avgExpenditureGateway.Insert(avgExpenditure);
+
+                }
+                else
+                {
+                    //According to format of dataset
+                    if (!char.IsWhiteSpace(temp[3]))
+                    {
+                        tempCategory = temp;
+                    }
+                    //According to format of dataset
+                    else if (temp.Length > 4)
+                    {
+                        if (char.IsWhiteSpace(temp[3]) == true && char.IsWhiteSpace(temp[4]) == false && ((Excel.Range)range.Cells[row, 2]).Text != "-")
+                        {
+                            AvgExpenditure avgExpenditure = new AvgExpenditure();
+                            avgExpenditure.type = temp;
+                            avgExpenditure.category = tempCategory;
+                            avgExpenditure.recordYear = System.DateTime.Now;
+                            avgExpenditure.avgAmount = double.Parse(((Excel.Range)range.Cells[row, 2]).Text);
+                            avgExpenditureGateway.Insert(avgExpenditure);
+                        }
+                    }
                 }
             }
             xlWorkBook.Close(true, null, null);

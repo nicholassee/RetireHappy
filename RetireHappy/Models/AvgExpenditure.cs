@@ -11,15 +11,13 @@ namespace RetireHappy.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class AvgExpenditure
     {
-        [Key]
         public int eId { get; set; }
         public string category { get; set; }
         public Nullable<System.DateTime> recordYear { get; set; }
         public Nullable<double> avgAmount { get; set; }
-        public Nullable<int> count { get; set; }
+        public string type { get; set; }
     }
 }

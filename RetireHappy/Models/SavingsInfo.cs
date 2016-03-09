@@ -16,6 +16,7 @@ namespace RetireHappy.Models
     public partial class SavingsInfo
     {
         public int Id { get; set; }
+
         [Display(Name = "Estimate Monthly Savings Required")]
         public Nullable<double> calcRetSavings { get; set; }
 
