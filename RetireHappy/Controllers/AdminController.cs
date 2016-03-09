@@ -6,6 +6,10 @@ using System.Web.Mvc;
 using RetireHappy.Models;
 using RetireHappy.DAL;
 using Excel = Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
+using System.IO;
+using System;
+using NPOI.SS.UserModel;
 
 namespace RetireHappy.Controllers
 {
@@ -28,27 +32,22 @@ namespace RetireHappy.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase uploadFile)
         {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            Excel.Range range;
-
             string path = Server.MapPath("~/Content/" + uploadFile.FileName);
             if (System.IO.File.Exists(path))
             {
                 System.IO.File.Delete(path);
             }
             uploadFile.SaveAs(path);
-            // Read data from excel file
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Open(path);
-            xlWorkSheet = xlWorkBook.Sheets[4];
-            range = xlWorkSheet.UsedRange;
-            string tempCategory ="";
-            // assuming row starts from 9 and column for category and type is in 1 and figure is in column 2
-            for(int row = 9; row <= range.Rows.Count; row++)
+            IWorkbook wb = WorkbookFactory.Create(new FileStream(
+               Path.GetFullPath(path),
+               FileMode.Open, FileAccess.Read,
+               FileShare.ReadWrite));
+            ISheet ws = wb.GetSheetAt(3);
+            string tempCategory = "";
+            // assuming format is fixed, row starts from 9 and column for category and type is in 0 and figure is in column 1
+            for (int row = 8; row <= ws.LastRowNum; row++)
             {
-                string temp = ((Excel.Range)range.Cells[row, 1]).Text;
+                string temp = ws.GetRow(row).GetCell(0).ToString();
                 if (string.IsNullOrEmpty(temp))
                 {
 
@@ -63,24 +62,19 @@ namespace RetireHappy.Controllers
                     //According to format of dataset
                     else if (temp.Length > 4)
                     {
-                        if (char.IsWhiteSpace(temp[3]) == true && char.IsWhiteSpace(temp[4]) == false && ((Excel.Range)range.Cells[row, 2]).Text != "-")
+                        if(char.IsWhiteSpace(temp[3]) == true && char.IsWhiteSpace(temp[4]) == false && ws.GetRow(row).GetCell(1).ToString() != "-")
                         {
                             AvgExpenditure avgExpenditure = new AvgExpenditure();
-                            avgExpenditure.type = temp;
-                            avgExpenditure.category = tempCategory;
+                            avgExpenditure.type = temp.Trim();
+                            avgExpenditure.category = tempCategory.Trim();
                             avgExpenditure.recordYear = System.DateTime.Now;
-                            avgExpenditure.avgAmount = double.Parse(((Excel.Range)range.Cells[row, 2]).Text);
+                            avgExpenditure.avgAmount = double.Parse(ws.GetRow(row).GetCell(1).ToString());
                             avgExpenditureGateway.Insert(avgExpenditure);
                         }
                     }
                 }
+                
             }
-            xlWorkBook.Close(true, null, null);
-            xlApp.Quit();
-
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
             return View();
         }
 

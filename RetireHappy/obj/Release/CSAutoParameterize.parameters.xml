@@ -3,7 +3,4 @@
   <parameter name="RetireHappyDBEntities-Web.config Connection String" description="RetireHappyDBEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.RetireHappyContext.csdl|res://*/Models.RetireHappyContext.ssdl|res://*/Models.RetireHappyContext.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=retirehappy.database.windows.net;initial catalog=RetireHappyDB;user id=RetireHappyAdmin;password=ict2106_RetireHappy;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='RetireHappyDBEntities']/@connectionString" />
   </parameter>
-  <parameter name="RetireHappyDB-Web.config Connection String" description="RetireHappyDB Connection String used in web.config by the application to access the database." defaultValue="RetireHappyDB_ConnectionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nicholas\ See\\Documents\\school\\ICT2106-Software\ Design\\assignment\\project_01Mar\\RetireHappy_22Feb_1500\\RetireHappy\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='RetireHappyDB']/@connectionString" />
-  </parameter>
 </parameters>
