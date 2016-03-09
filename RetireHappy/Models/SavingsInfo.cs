@@ -11,15 +11,23 @@ namespace RetireHappy.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class SavingsInfo
     {
         public int Id { get; set; }
+        [Display(Name = "Estimate Monthly Savings Required")]
         public Nullable<double> calcRetSavings { get; set; }
+
+        [Display(Name = "Risk Level")]
         public string riskLevel { get; set; }
+
+        [Display(Name = "Expenditure (%)")]
         public Nullable<double> expPercent { get; set; }
+
+        [Display(Name = "Shortfall (%)")]
         public Nullable<double> diffPercent { get; set; }
-    
+
         public virtual UserProfile UserProfile { get; set; }
 
         public double calculate(int expRetAge, int currentAge, double desiredMonRetInc, double inflationRate, int retDuration)

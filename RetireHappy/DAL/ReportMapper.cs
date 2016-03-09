@@ -9,6 +9,7 @@ namespace RetireHappy.DAL
 {
     public class ReportMapper : ICommonGateway<User>, ICommonGateway<SavingsInfo>
     {
+
         public Object ComputeAverage()
         {
             // for prototype purposes only, user profile and savings info are not yet access for prototype report implementation

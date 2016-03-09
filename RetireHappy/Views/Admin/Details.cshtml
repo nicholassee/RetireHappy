@@ -1,0 +1,50 @@
+﻿@model RetireHappy.Models.AvgExpenditure
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AvgExpenditure</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recordYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recordYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avgAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avgAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.count)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.eId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

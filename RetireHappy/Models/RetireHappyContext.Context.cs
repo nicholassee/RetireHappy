@@ -27,5 +27,6 @@ namespace RetireHappy.Models
     
         public virtual DbSet<SavingsInfo> SavingsInfoes { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<AvgExpenditure> AvgExpenditures { get; set; }
     }
 }

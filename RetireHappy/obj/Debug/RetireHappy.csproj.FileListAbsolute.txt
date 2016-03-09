@@ -549,4 +549,3 @@ C:\Users\Nicholas See\Documents\school\ICT2106-Software Design\assignment\projec
 C:\Users\Nicholas See\Documents\school\ICT2106-Software Design\assignment\project_01Mar\RetireHappy_22Feb_1500\RetireHappy\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Nicholas See\Documents\school\ICT2106-Software Design\assignment\project_01Mar\RetireHappy_22Feb_1500\RetireHappy\obj\Debug\RetireHappy.dll
 C:\Users\Nicholas See\Documents\school\ICT2106-Software Design\assignment\project_01Mar\RetireHappy_22Feb_1500\RetireHappy\obj\Debug\RetireHappy.pdb
-C:\Users\Nicholas See\Documents\school\ICT2106-Software Design\assignment\project_01Mar\RetireHappy_22Feb_1500\RetireHappy\obj\Debug\RetireHappy.csprojResolveAssemblyReference.cache

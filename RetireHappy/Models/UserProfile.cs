@@ -11,21 +11,50 @@ namespace RetireHappy.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class UserProfile
     {
         public int Id { get; set; }
+
+        [Display(Name = "What is your age?")]
+        [Range(12, 99)]
         public Nullable<int> age { get; set; }
+
+        [Display(Name = "What is your gender?")]
+        [Required(ErrorMessage = "Please select your gender")]
         public string gender { get; set; }
+
+        [Display(Name = "Your Expected Retirement Age")]
+        [Range(18, 99)]
         public Nullable<int> expRetAge { get; set; }
+
+        [Display(Name = "Retirement Duration(years)")]
+        [Range(1, 99)]
         public Nullable<int> retDuration { get; set; }
+
+        [Display(Name = "Your Monthly Take Home Pay")]
+        [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> monIncome { get; set; }
+
+        [Display(Name = "Monthly Expenditure")]
+        [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> avgMonExpenditure { get; set; }
+
+        [Display(Name = "Current Monthly Savings Amount")]
+        [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> curSavingAmt { get; set; }
+
+        [Display(Name = "Desired Monthly Retirement Income")]
+        [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> desiredMonRetInc { get; set; }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> timestamp { get; set; }
+
+        [Display(Name = "Inflation Rate")]
         public Nullable<double> inflationRate { get; set; }
-    
+
         public virtual SavingsInfo SavingsInfo { get; set; }
     }
 }

@@ -4,7 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RetireHappyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RetireHappyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AvgExpenditure">
+          <Key>
+            <PropertyRef Name="eId" />
+          </Key>
+          <Property Name="eId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="255" />
+          <Property Name="recordYear" Type="datetime" />
+          <Property Name="avgAmount" Type="float" />
+          <Property Name="count" Type="int" />
+        </EntityType>
         <EntityType Name="SavingsInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -44,6 +54,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RetireHappyDBModelStoreContainer">
+          <EntitySet Name="AvgExpenditure" EntityType="Self.AvgExpenditure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SavingsInfo" EntityType="Self.SavingsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__SavingsInfo__Id__44FF419A" Association="Self.FK__SavingsInfo__Id__44FF419A">
@@ -51,8 +62,7 @@
             <End Role="SavingsInfo" EntitySet="SavingsInfo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RetireHappyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -103,7 +113,18 @@
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="SavingsInfo" EntitySet="SavingsInfoes" />
           </AssociationSet>
+          <EntitySet Name="AvgExpenditures" EntityType="RetireHappyDBModel.AvgExpenditure" />
         </EntityContainer>
+        <EntityType Name="AvgExpenditure">
+          <Key>
+            <PropertyRef Name="eId" />
+          </Key>
+          <Property Name="eId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="recordYear" Type="DateTime" Precision="3" />
+          <Property Name="avgAmount" Type="Double" />
+          <Property Name="count" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -135,6 +156,17 @@
                 <ScalarProperty Name="desiredMonRetInc" ColumnName="desiredMonRetInc" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="inflationRate" ColumnName="inflationRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvgExpenditures">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.AvgExpenditure">
+              <MappingFragment StoreEntitySet="AvgExpenditure">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="avgAmount" ColumnName="avgAmount" />
+                <ScalarProperty Name="recordYear" ColumnName="recordYear" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="eId" ColumnName="eId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
