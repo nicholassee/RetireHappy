@@ -8,6 +8,10 @@ namespace RetireHappy.DAL
 {
     public class AvgExpenditureGateway : CommonGateway<AvgExpenditure>
     {
-        
+        public void deleteAll()
+        {
+            string query = "DELETE FROM AvgExpenditure";
+            db.Database.ExecuteSqlCommand(query);
+        }
     }
 }

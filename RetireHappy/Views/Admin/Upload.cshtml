@@ -1,19 +1,91 @@
 ﻿@model RetireHappy.Models.AvgExpenditure
 
 @{
-    ViewBag.Title = "Upload";
+    ViewBag.Title = "Update Data";
 }
 
-<h2>Upload</h2>
+@section CSS{
+     <style>
+        #customUpload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+        text-align: center;
+        font-weight: normal;
+        }
 
+        #customUpload:hover{
+            background-color: whitesmoke;
+        }
+    </style> 
+}
+
+<h1 class="page-header">Update Data</h1>
 <div>
-    <h4>AvgExpenditure</h4>
-    <hr />
+    <h3 class="text-success">@Html.Raw(ViewBag.SuccessMsg)</h3>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <label> Admin Code: </label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" id="adminCode" name="adminCode" class="form-control" />
+            </div>
+            <div class="col-md-5">
+                <input type="submit" id="verify" value="Verify" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
     @using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <span> Excel File </span><input type="file" name="uploadFile" />
-        <br />
-        <input type="submit" value="Upload" />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <label id="fileLabel" style="display:none"> File: </label>
+                </div>
+                <div class="col-md-5">
+                    <label id="customUpload" for="uploadFile" class="custom-file-upload" style="display:none">
+                        Browse
+                        <input id="uploadFile" type="file" name="uploadFile" style="display:none" disabled/>
+                    </label>
+                    <span id="uploadMsg" style="display:none"> Choose your excel file </span>
+                </div>
+                <div class="col-md-offset-2 col-md-10">
+                    <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="fileSubmit" value="Update" class="btn btn-default" style="display:none" disabled/>
+                </div>
+            </div>
+        </div>
     }
 </div>
 
+<script>
+    document.getElementById("verify").addEventListener("click", Verify);
+
+    function Verify() {
+        if (document.getElementById("adminCode").value == "retireHappy123") {
+            document.getElementById("fileSubmit").disabled = false;
+            document.getElementById("uploadFile").disabled = false;
+            document.getElementById("adminCode").disabled = true;
+            document.getElementById("customUpload").style.display = "initial";
+            document.getElementById("uploadMsg").style.display = "initial";
+            document.getElementById("fileSubmit").style.display = "initial";
+            document.getElementById("fileLabel").style.display = "initial";
+        } else {
+            alert("Admin code is incorrect, please contact RetireHappy for further assistance.");
+        }
+    };
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+   

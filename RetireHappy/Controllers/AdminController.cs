@@ -32,48 +32,66 @@ namespace RetireHappy.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase uploadFile)
         {
-            string path = Server.MapPath("~/Content/" + uploadFile.FileName);
-            if (System.IO.File.Exists(path))
+            if(uploadFile == null || uploadFile.ContentLength == 0)
             {
-                System.IO.File.Delete(path);
+                ViewBag.Error = "Please select a excel file";
+                return View("Upload");
             }
-            uploadFile.SaveAs(path);
-            IWorkbook wb = WorkbookFactory.Create(new FileStream(
-               Path.GetFullPath(path),
-               FileMode.Open, FileAccess.Read,
-               FileShare.ReadWrite));
-            ISheet ws = wb.GetSheetAt(3);
-            string tempCategory = "";
-            // assuming format is fixed, row starts from 9 and column for category and type is in 0 and figure is in column 1
-            for (int row = 8; row <= ws.LastRowNum; row++)
+            else
             {
-                string temp = ws.GetRow(row).GetCell(0).ToString();
-                if (string.IsNullOrEmpty(temp))
+                if(uploadFile.FileName.EndsWith("xls") || uploadFile.FileName.EndsWith("xlsx"))
                 {
+                    string path = Server.MapPath("~/Content/" + uploadFile.FileName);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    uploadFile.SaveAs(path);
+                    IWorkbook wb = WorkbookFactory.Create(new FileStream(
+                       Path.GetFullPath(path),
+                       FileMode.Open, FileAccess.Read,
+                       FileShare.ReadWrite));
+                    ISheet ws = wb.GetSheetAt(3);
+                    string tempCategory = "";
+                    avgExpenditureGateway.deleteAll();
+                    // assuming format is fixed, row starts from 9 and column for category and type is in 0 and figure is in column 1
+                    for (int row = 8; row <= ws.LastRowNum; row++)
+                    {
+                        string temp = ws.GetRow(row).GetCell(0).ToString();
+                        if (string.IsNullOrEmpty(temp))
+                        {
 
+                        }
+                        else
+                        {
+                            //According to format of dataset
+                            if (!char.IsWhiteSpace(temp[3]))
+                            {
+                                tempCategory = temp;
+                            }
+                            //According to format of dataset
+                            else if (temp.Length > 4)
+                            {
+                                if (char.IsWhiteSpace(temp[3]) == true && char.IsWhiteSpace(temp[4]) == false && ws.GetRow(row).GetCell(1).ToString() != "-")
+                                {
+                                    AvgExpenditure avgExpenditure = new AvgExpenditure();
+                                    avgExpenditure.type = temp.Trim();
+                                    avgExpenditure.category = tempCategory.Trim();
+                                    avgExpenditure.recordYear = System.DateTime.Now;
+                                    avgExpenditure.avgAmount = double.Parse(ws.GetRow(row).GetCell(1).ToString());
+                                    avgExpenditureGateway.Insert(avgExpenditure);
+                                }
+                            }
+                        }
+
+                    }
+                    ViewBag.SuccessMsg = "Data has been updated";
                 }
                 else
                 {
-                    //According to format of dataset
-                    if (!char.IsWhiteSpace(temp[3]))
-                    {
-                        tempCategory = temp;
-                    }
-                    //According to format of dataset
-                    else if (temp.Length > 4)
-                    {
-                        if(char.IsWhiteSpace(temp[3]) == true && char.IsWhiteSpace(temp[4]) == false && ws.GetRow(row).GetCell(1).ToString() != "-")
-                        {
-                            AvgExpenditure avgExpenditure = new AvgExpenditure();
-                            avgExpenditure.type = temp.Trim();
-                            avgExpenditure.category = tempCategory.Trim();
-                            avgExpenditure.recordYear = System.DateTime.Now;
-                            avgExpenditure.avgAmount = double.Parse(ws.GetRow(row).GetCell(1).ToString());
-                            avgExpenditureGateway.Insert(avgExpenditure);
-                        }
-                    }
+                    ViewBag.Error = "File type is unsupported";
+                    return View("Upload");
                 }
-                
             }
             return View();
         }
