@@ -1,4 +1,4 @@
-﻿@model RetireHappy.Models.User
+﻿@model RetireHappy.Models.UserProfile
 
 @{
     ViewBag.Title = "Calculator Step 1";
@@ -7,40 +7,53 @@
 @section CSS{
     <!-- https://gist.github.com/rcotrina94/7828886 -->
     <style>
-.radio-selector input{
-    margin:0;padding:0;
-    -webkit-appearance:none;
-       -moz-appearance:none;
-            appearance:none;
-}
-.male{background-image:url(../Content/images/male.png);}
-.female{background-image:url(../Content/images/female.png);}
+        .radio-selector input {
+            margin: 0;
+            padding: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
 
-.radio-selector input:active +.img-radio{opacity: .9;}
-.radio-selector input:checked +.img-radio{
-    -webkit-filter: none;
-       -moz-filter: none;
+        .male {
+            background-image: url(../Content/images/male.png);
+        }
+
+        .female {
+            background-image: url(../Content/images/female.png);
+        }
+
+        .radio-selector input:active + .img-radio {
+            opacity: .9;
+        }
+
+        .radio-selector input:checked + .img-radio {
+            -webkit-filter: none;
+            -moz-filter: none;
             filter: none;
-}
-.img-radio{
-    cursor:pointer;
-    background-size:contain;
-    background-repeat:no-repeat;
-    display:inline-block;
-    width:300px;height:210px;
-    -webkit-transition: all 100ms ease-in;
-       -moz-transition: all 100ms ease-in;
+        }
+
+        .img-radio {
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: inline-block;
+            width: 300px;
+            height: 210px;
+            -webkit-transition: all 100ms ease-in;
+            -moz-transition: all 100ms ease-in;
             transition: all 100ms ease-in;
-    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
-       -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+            -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+            -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
             filter: brightness(1.8) grayscale(1) opacity(.7);
-}
-.img-radio:hover{
-    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
-       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
-            filter: brightness(1.2) grayscale(.5) opacity(.9);
-}
-        </style>
+        }
+
+            .img-radio:hover {
+                -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+                -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+                filter: brightness(1.2) grayscale(.5) opacity(.9);
+            }
+    </style>
 }
 
 <h1 class="page-header">Retirement Calculator</h1>
@@ -62,10 +75,10 @@
                 @*Html.RadioButtonFor(model => model.gender, "Female")*@
 
                 <div class="radio-selector">
-                    
+
                     @Html.RadioButtonFor(model => model.gender, "Male", new { @id = "male" })
                     <label class="img-radio male" for="male"></label>
-                    
+
                     @Html.RadioButtonFor(model => model.gender, "Female", new { @id = "female" })
                     <label class="img-radio female" for="female"></label>
 
@@ -85,3 +98,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

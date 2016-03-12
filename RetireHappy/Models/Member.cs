@@ -12,12 +12,13 @@ namespace RetireHappy.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AvgExpenditure
+    public partial class Member
     {
-        public int eId { get; set; }
-        public string category { get; set; }
-        public string type { get; set; }
-        public Nullable<System.DateTime> recordYear { get; set; }
-        public Nullable<double> avgAmount { get; set; }
+        public int Id { get; set; }
+        public string password { get; set; }
+        public string userName { get; set; }
+    
+        public virtual ExpenditureList ExpenditureList { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

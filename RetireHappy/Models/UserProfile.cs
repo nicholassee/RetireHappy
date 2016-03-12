@@ -49,12 +49,16 @@ namespace RetireHappy.Models
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> desiredMonRetInc { get; set; }
 
+        [Display(Name = "Departure Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> timestamp { get; set; }
 
         [Display(Name = "Inflation Rate")]
         public Nullable<double> inflationRate { get; set; }
 
+        public string ifUseAvgExp { get; set; }
+    
+        public virtual Member Member { get; set; }
         public virtual SavingsInfo SavingsInfo { get; set; }
     }
 }

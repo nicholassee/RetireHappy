@@ -224,13 +224,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ExpenditureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SavingsInfosController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DAL\AvgExpenditureGateway.cs" />
     <Compile Include="DAL\CommonGateway.cs" />
+    <Compile Include="DAL\ExpenditureGateway.cs" />
     <Compile Include="DAL\ICommonGateway.cs" />
+    <Compile Include="DAL\MemberGateway.cs" />
     <Compile Include="DAL\ReportMapper.cs" />
     <Compile Include="DAL\RetireHappyContext.cs" />
     <Compile Include="DAL\SavingInfosGateway.cs" />
@@ -243,7 +246,13 @@
     <Compile Include="Models\AvgExpenditure.cs">
       <DependentUpon>RetireHappyContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExpenditureList.cs">
+      <DependentUpon>RetireHappyContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Member.cs">
+      <DependentUpon>RetireHappyContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\RetireHappyContext.Context.cs">
       <AutoGen>True</AutoGen>
@@ -492,9 +501,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -517,13 +523,10 @@
     <Content Include="Views\SavingsInfos\Edit.cshtml" />
     <Content Include="Views\SavingsInfos\Index.cshtml" />
     <Content Include="Views\Users\CalculatorStep1_bk.cshtml" />
-    <Content Include="Views\Users\CalculatorStep2.cshtml" />
-    <Content Include="Views\Users\CalculatorStep3.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Report\Test.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\SavingsInfos\ComputeSavingsInfo.cshtml" />
-    <Content Include="Views\Users\CalculatorStep1.cshtml" />
     <Content Include="Views\Report\Table.cshtml" />
     <Content Include="Scripts\morrisjs\.bower.json" />
     <Content Include="Scripts\morrisjs\.gitignore" />
@@ -561,6 +564,13 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Upload.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Expenditure\Index.cshtml" />
+    <Content Include="Views\Users\CalculatorStep2.cshtml" />
+    <Content Include="Views\Users\CalculatorStep1.cshtml" />
+    <Content Include="Views\Users\CalculatorStep3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

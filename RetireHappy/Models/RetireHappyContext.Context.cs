@@ -25,8 +25,10 @@ namespace RetireHappy.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AvgExpenditure> AvgExpenditures { get; set; }
+        public virtual DbSet<ExpenditureList> ExpenditureLists { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<SavingsInfo> SavingsInfoes { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<AvgExpenditure> AvgExpenditures { get; set; }
     }
 }

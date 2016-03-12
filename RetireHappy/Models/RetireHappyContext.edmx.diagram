@@ -4,11 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3a690a18a5364b1c9c8a20520547ec01" Name="Diagram1">
-        <EntityTypeShape EntityType="RetireHappyDBModel.SavingsInfo" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RetireHappyDBModel.UserProfile" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="279bff3debbe415c86947f08af83cbbe" Name="Diagram1">
+        <EntityTypeShape EntityType="RetireHappyDBModel.AvgExpenditure" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RetireHappyDBModel.ExpenditureList" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RetireHappyDBModel.Member" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RetireHappyDBModel.SavingsInfo" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RetireHappyDBModel.UserProfile" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="RetireHappyDBModel.FK__ExpenditureL__Id__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="RetireHappyDBModel.FK__Member__Id__619B8048" ManuallyRouted="false" />
         <AssociationConnector Association="RetireHappyDBModel.FK__SavingsInfo__Id__44FF419A" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RetireHappyDBModel.AvgExpenditure" Width="1.5" PointX="5.25" PointY="1.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

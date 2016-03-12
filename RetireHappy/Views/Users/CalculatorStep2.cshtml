@@ -1,8 +1,26 @@
-﻿@model RetireHappy.Models.User
+﻿@model RetireHappy.Models.UserProfile
 
 @{
     ViewBag.Title = "Calculator Step 2";
 }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#manBtn").click(function () { //avgExpInput
+            $("#avgExpInput *").prop('disabled', false);
+
+        });
+
+        $("#useAvgBtn").click(function () {
+            $("#avgExpInput *").prop('disabled', true);
+
+        });
+
+    });
+
+</script>
 <h1 class="page-header">Retirement Calculator</h1>
 
 <p><strong>Step 2</strong></p>
@@ -39,18 +57,35 @@
         </div>
         @* added *@
         <div class="form-group">
-          
+
             @Html.LabelFor(model => model.avgMonExpenditure, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.RadioButton("Gender", "Male", new { @checked = true})
-                
-                @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
-                <br />
-                @Html.RadioButton("Gender", "Male")
-                <Label>Choose from national average list</Label>  
+                @*@Html.RadioButton("Gender", "Male", new { @checked = true})*@
+                @*<input id="manBtn" type="radio" value="1" name="expTypeGroup" checked="checked"/>*@
+                @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn" })
+                <div id="avgExpInput" style="display:inline">
+                    @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>      
+            <div class="col-md-offset-2 col-md-10">
+                <br />
+                @Html.RadioButtonFor(model => model.ifUseAvgExp, "true", new { @id = "useAvgBtn" }) <Label>Choose from national average list</Label>
+                @*<div class="radio-selector">
+
+                @Html.RadioButtonFor(model => model.gender, "Male", new { @id = "male" })
+                <label class="img-radio male" for="male"></label>
+
+                @Html.RadioButtonFor(model => model.gender, "Female", new { @id = "female" })
+                <label class="img-radio female" for="female"></label>
+
+            </div>*@
+
+                @*<input id="useAvgBtn" type="radio" value="2" name="expTypeGroup" /><Label>Choose from national average list</Label>*@
+                @*@Html.RadioButton("Gender", "Male")*@
+                @*<Label>Choose from national average list</Label>*@
+            </div>
+        </div>
 
 
         <div class="form-group">

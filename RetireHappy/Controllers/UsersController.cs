@@ -62,14 +62,22 @@ namespace RetireHappy.Controllers
         // POST: Users/CalculatorStep2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate")] UserProfile userProfile)
+        public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate, ifUseAvgExp")] UserProfile userProfile)
         {
             Session["age"] = userProfile.age;
             Session["monIncome"] = userProfile.monIncome;
             Session["curSavingAmt"] = userProfile.curSavingAmt;
             Session["avgMonExpenditure"] = userProfile.avgMonExpenditure;
             Session["inflationRate"] = userProfile.inflationRate;
-            return RedirectToAction("CalculatorStep3");
+            Session["ifUseAvgExp"] = userProfile.ifUseAvgExp;
+            if (Convert.ToBoolean(userProfile.ifUseAvgExp) == false)
+            {
+                return RedirectToAction("CalculatorStep3");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Expenditure");
+            }
         }
 
         // GET: Users/CalculatorStep3
@@ -87,23 +95,23 @@ namespace RetireHappy.Controllers
             Session["desiredMonRetInc"] = userProfile.desiredMonRetInc;
             Session["expRetAge"] = userProfile.expRetAge;
             Session["retDuration"] = userProfile.retDuration;
-            // To fix entity framework bug of being unable to cater to multiple temp instance of userProfile model
-            UserProfile newUserProfile = new UserProfile();
-            newUserProfile.desiredMonRetInc = userProfile.desiredMonRetInc;
-            newUserProfile.expRetAge = userProfile.expRetAge;
-            newUserProfile.retDuration = userProfile.retDuration;
-            newUserProfile.age = (int)Session["age"];
-            newUserProfile.gender = (string)Session["gender"];
-            newUserProfile.monIncome = (double)Session["monIncome"];
-            newUserProfile.avgMonExpenditure = (double)Session["avgMonExpenditure"];
-            newUserProfile.curSavingAmt = (double)Session["curSavingAmt"];
-            newUserProfile.desiredMonRetInc = (double)Session["desiredMonRetInc"];
-            newUserProfile.inflationRate = (double)Session["inflationRate"];
-            newUserProfile.timestamp = DateTime.Now;
-
-            userGateway.Insert(newUserProfile);
-            Session["Id"] = newUserProfile.Id;
-            //return RedirectToAction("Index");
+            userProfile.age = (int)Session["age"];
+            userProfile.gender = (string)Session["gender"];
+            userProfile.monIncome = (double)Session["monIncome"];
+            userProfile.avgMonExpenditure = (double)Session["avgMonExpenditure"];
+            userProfile.curSavingAmt = (double)Session["curSavingAmt"];
+            userProfile.desiredMonRetInc = (double)Session["desiredMonRetInc"];
+            userProfile.inflationRate = (double)Session["inflationRate"];
+            userProfile.timestamp = DateTime.Now;
+            userProfile.ifUseAvgExp = (string)Session["ifUseAvgExp"];
+            // ** ATTN JERLYN ** this check is not needed as both methods of expenditure stores in the same session variable hence
+            // it will contain values
+            //if (Convert.ToBoolean(userProfile.ifUseAvgExp) == true)
+            //{
+               // userProfile.avgMonExpenditure = (float)Session["avgMonExpenditure"];
+            //}
+            userGateway.Insert(userProfile);
+            Session["Id"] = userProfile.Id;
             return RedirectToAction("ComputeSavingsInfo", "SavingsInfos");
         }
 
