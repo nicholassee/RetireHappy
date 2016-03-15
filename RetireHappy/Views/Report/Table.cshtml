@@ -6,31 +6,30 @@
 
 <h2>Statistic</h2>
 
-<h3>Average Calculated Monthly Retirement Savings for All Users in Income Range</h3>
+@using (Html.BeginForm("ExportData", "Report", FormMethod.Post))
+{
+    <input type="submit" name="btnExportReport" value="Export to Excel" class="btn btn-primary btn-lg" />
+}
+
+<h3>Total Response for Both Gender</h3>
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th>Below 25</th>
-                <th>25 - 34</th>
-                <th>35 - 44</th>
-                <th>45 - 54</th>
-                <th>55 - 64</th>
+                <th>Male</th>
+                <th>Female</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>@Html.DisplayFor(model => model.ageRange_below_25)</td>
-                <td>@Html.DisplayFor(model => model.ageRange_25_34)</td>
-                <td>@Html.DisplayFor(model => model.ageRange_35_44)</td>
-                <td>@Html.DisplayFor(model => model.ageRange_45_54)</td>
-                <td>@Html.DisplayFor(model => model.ageRange_55_64)</td>
+                <td>@Html.DisplayFor(model => model.male)</td>
+                <td>@Html.DisplayFor(model => model.female)</td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<h3>Average Calculated Monthly Retirement Savings for All Users in Age Range</h3>
+<h3>Average Calculated Monthly Retirement Savings for All Users in Income Range</h3>
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover">
         <thead>
@@ -53,6 +52,31 @@
                 <td>@Html.DisplayFor(model => model.inc_4001_5000)</td>
                 <td>@Html.DisplayFor(model => model.inc_5001_6000)</td>
                 <td>@Html.DisplayFor(model => model.inc_above_6000)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<h3>Average Calculated Monthly Retirement Savings for All Users in Age Range</h3>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Below 25</th>
+                <th>25 - 34</th>
+                <th>35 - 44</th>
+                <th>45 - 54</th>
+                <th>55 - 64</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.ageRange_below_25)</td>
+                <td>@Html.DisplayFor(model => model.ageRange_25_34)</td>
+                <td>@Html.DisplayFor(model => model.ageRange_35_44)</td>
+                <td>@Html.DisplayFor(model => model.ageRange_45_54)</td>
+                <td>@Html.DisplayFor(model => model.ageRange_55_64)</td>
             </tr>
         </tbody>
     </table>

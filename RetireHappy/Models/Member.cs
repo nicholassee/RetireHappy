@@ -11,14 +11,28 @@ namespace RetireHappy.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Member
     {
-        public int Id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Member()
+        {
+            this.UserProfiles = new HashSet<UserProfile>();
+        }
+    
+        public int mId { get; set; }
+
+        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Please enter password")]
         public string password { get; set; }
+
+        [Display(Name = "Username")]
+        [Required(ErrorMessage = "Please enter username")]
         public string userName { get; set; }
     
         public virtual ExpenditureList ExpenditureList { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserProfile> UserProfiles { get; set; }
     }
 }

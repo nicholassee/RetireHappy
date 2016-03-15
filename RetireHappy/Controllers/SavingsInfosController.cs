@@ -13,7 +13,7 @@ namespace RetireHappy.Controllers
 {
     public class SavingsInfosController : Controller
     {
-        private RetireHappyDBEntities db = new RetireHappyDBEntities();
+        private RetireHappyContext db = new RetireHappyContext();
         private SavingInfosGateway savingInfosGateway = new SavingInfosGateway();
 
         // GET: SavingsInfos
@@ -70,7 +70,17 @@ namespace RetireHappy.Controllers
             savingsInfo.calcRetSavings = Math.Round(calcRetSavings, 2);
             savingsInfo.Id = (int)Session["Id"];
             savingsInfo.expPercent = Math.Round( (avgMonExpenditure / monIncome) * 100, 2);
-            savingInfosGateway.Insert(savingsInfo);
+            // if userprofile exist for current session user
+            if (!string.IsNullOrEmpty((string)Session["updateExisting"]))
+            {
+                //update savingsinfo related
+                savingInfosGateway.updateSavingInfos(savingsInfo);
+            }
+            else
+            {
+                //insert new savingsinfo
+                savingInfosGateway.Insert(savingsInfo);
+            }
             return View(savingsInfo);
         }
 

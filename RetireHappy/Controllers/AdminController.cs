@@ -15,7 +15,7 @@ namespace RetireHappy.Controllers
 {
     public class AdminController : Controller
     {
-        private RetireHappyDBEntities db = new RetireHappyDBEntities();
+        private RetireHappyContext db = new RetireHappyContext();
         private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
 
         // GET: Admin

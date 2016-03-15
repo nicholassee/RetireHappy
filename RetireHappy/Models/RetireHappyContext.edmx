@@ -17,9 +17,9 @@
         </EntityType>
         <EntityType Name="ExpenditureList">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="mId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="mId" Type="int" Nullable="false" />
           <Property Name="item1" Type="varchar" MaxLength="255" />
           <Property Name="item2" Type="varchar" MaxLength="255" />
           <Property Name="item3" Type="varchar" MaxLength="255" />
@@ -33,9 +33,9 @@
         </EntityType>
         <EntityType Name="Member">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="mId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="mId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="255" />
           <Property Name="userName" Type="varchar" MaxLength="255" />
         </EntityType>
@@ -54,6 +54,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mId" Type="int" />
           <Property Name="age" Type="int" />
           <Property Name="gender" Type="char" MaxLength="255" />
           <Property Name="expRetAge" Type="int" />
@@ -66,31 +67,19 @@
           <Property Name="inflationRate" Type="float" />
           <Property Name="ifUseAvgExp" Type="char" MaxLength="10" />
         </EntityType>
-        <Association Name="FK__ExpenditureL__Id__6477ECF3">
+        <Association Name="FK__Expenditure__mId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="ExpenditureList" Type="Self.ExpenditureList" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Member">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="mId" />
             </Principal>
             <Dependent Role="ExpenditureList">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="mId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Member__Id__619B8048">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Member">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SavingsInfo__Id__44FF419A">
+        <Association Name="FK__SavingsInfo__Id__693CA210">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -102,23 +91,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UserProfile__mId__6A30C649">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="mId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RetireHappyDBModelStoreContainer">
           <EntitySet Name="AvgExpenditure" EntityType="Self.AvgExpenditure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpenditureList" EntityType="Self.ExpenditureList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SavingsInfo" EntityType="Self.SavingsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ExpenditureL__Id__6477ECF3" Association="Self.FK__ExpenditureL__Id__6477ECF3">
+          <AssociationSet Name="FK__Expenditure__mId__6EF57B66" Association="Self.FK__Expenditure__mId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
             <End Role="ExpenditureList" EntitySet="ExpenditureList" />
           </AssociationSet>
-          <AssociationSet Name="FK__Member__Id__619B8048" Association="Self.FK__Member__Id__619B8048">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="Member" EntitySet="Member" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SavingsInfo__Id__44FF419A" Association="Self.FK__SavingsInfo__Id__44FF419A">
+          <AssociationSet Name="FK__SavingsInfo__Id__693CA210" Association="Self.FK__SavingsInfo__Id__693CA210">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="SavingsInfo" EntitySet="SavingsInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProfile__mId__6A30C649" Association="Self.FK__UserProfile__mId__6A30C649">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -138,9 +139,9 @@
         </EntityType>
         <EntityType Name="ExpenditureList">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="mId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="mId" Type="Int32" Nullable="false" />
           <Property Name="item1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="item2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="item3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
@@ -151,17 +152,17 @@
           <Property Name="item8" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="item9" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="item10" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__ExpenditureL__Id__6477ECF3" FromRole="ExpenditureList" ToRole="Member" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Expenditure__mId__6EF57B66" FromRole="ExpenditureList" ToRole="Member" />
         </EntityType>
         <EntityType Name="Member">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="mId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="mId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="userName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ExpenditureList" Relationship="Self.FK__ExpenditureL__Id__6477ECF3" FromRole="Member" ToRole="ExpenditureList" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Member__Id__619B8048" FromRole="Member" ToRole="UserProfile" />
+          <NavigationProperty Name="ExpenditureList" Relationship="Self.FK__Expenditure__mId__6EF57B66" FromRole="Member" ToRole="ExpenditureList" />
+          <NavigationProperty Name="UserProfiles" Relationship="Self.FK__UserProfile__mId__6A30C649" FromRole="Member" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="SavingsInfo">
           <Key>
@@ -172,13 +173,14 @@
           <Property Name="riskLevel" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
           <Property Name="expPercent" Type="Double" />
           <Property Name="diffPercent" Type="Double" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__SavingsInfo__Id__44FF419A" FromRole="SavingsInfo" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__SavingsInfo__Id__693CA210" FromRole="SavingsInfo" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mId" Type="Int32" />
           <Property Name="age" Type="Int32" />
           <Property Name="gender" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
           <Property Name="expRetAge" Type="Int32" />
@@ -190,34 +192,34 @@
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="inflationRate" Type="Double" />
           <Property Name="ifUseAvgExp" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__Member__Id__619B8048" FromRole="UserProfile" ToRole="Member" />
-          <NavigationProperty Name="SavingsInfo" Relationship="Self.FK__SavingsInfo__Id__44FF419A" FromRole="UserProfile" ToRole="SavingsInfo" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__UserProfile__mId__6A30C649" FromRole="UserProfile" ToRole="Member" />
+          <NavigationProperty Name="SavingsInfo" Relationship="Self.FK__SavingsInfo__Id__693CA210" FromRole="UserProfile" ToRole="SavingsInfo" />
         </EntityType>
-        <Association Name="FK__ExpenditureL__Id__6477ECF3">
+        <Association Name="FK__Expenditure__mId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="ExpenditureList" Type="Self.ExpenditureList" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Member">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="mId" />
             </Principal>
             <Dependent Role="ExpenditureList">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="mId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Member__Id__619B8048">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+        <Association Name="FK__UserProfile__mId__6A30C649">
           <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="Id" />
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
             </Principal>
-            <Dependent Role="Member">
-              <PropertyRef Name="Id" />
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="mId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SavingsInfo__Id__44FF419A">
+        <Association Name="FK__SavingsInfo__Id__693CA210">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -235,15 +237,15 @@
           <EntitySet Name="Members" EntityType="Self.Member" />
           <EntitySet Name="SavingsInfoes" EntityType="Self.SavingsInfo" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
-          <AssociationSet Name="FK__ExpenditureL__Id__6477ECF3" Association="Self.FK__ExpenditureL__Id__6477ECF3">
+          <AssociationSet Name="FK__Expenditure__mId__6EF57B66" Association="Self.FK__Expenditure__mId__6EF57B66">
             <End Role="Member" EntitySet="Members" />
             <End Role="ExpenditureList" EntitySet="ExpenditureLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__Member__Id__619B8048" Association="Self.FK__Member__Id__619B8048">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
+          <AssociationSet Name="FK__UserProfile__mId__6A30C649" Association="Self.FK__UserProfile__mId__6A30C649">
             <End Role="Member" EntitySet="Members" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <AssociationSet Name="FK__SavingsInfo__Id__44FF419A" Association="Self.FK__SavingsInfo__Id__44FF419A">
+          <AssociationSet Name="FK__SavingsInfo__Id__693CA210" Association="Self.FK__SavingsInfo__Id__693CA210">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="SavingsInfo" EntitySet="SavingsInfoes" />
           </AssociationSet>
@@ -268,7 +270,7 @@
           <EntitySetMapping Name="ExpenditureLists">
             <EntityTypeMapping TypeName="RetireHappyDBModel.ExpenditureList">
               <MappingFragment StoreEntitySet="ExpenditureList">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="mId" ColumnName="mId" />
                 <ScalarProperty Name="item1" ColumnName="item1" />
                 <ScalarProperty Name="item2" ColumnName="item2" />
                 <ScalarProperty Name="item3" ColumnName="item3" />
@@ -285,7 +287,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="RetireHappyDBModel.Member">
               <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="mId" ColumnName="mId" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="userName" ColumnName="userName" />
               </MappingFragment>
@@ -306,6 +308,7 @@
             <EntityTypeMapping TypeName="RetireHappyDBModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="mId" ColumnName="mId" />
                 <ScalarProperty Name="age" ColumnName="age" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="expRetAge" ColumnName="expRetAge" />

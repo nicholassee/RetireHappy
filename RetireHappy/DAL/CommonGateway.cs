@@ -10,7 +10,7 @@ namespace RetireHappy.DAL
 {
     public class CommonGateway<T> : ICommonGateway<T> where T : class
     {
-        internal RetireHappyDBEntities db = new RetireHappyDBEntities();
+        internal RetireHappyContext db = new RetireHappyContext();
         internal DbSet<T> data = null;
 
         public CommonGateway()

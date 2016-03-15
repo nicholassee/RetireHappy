@@ -16,7 +16,7 @@ namespace RetireHappy.Models
 
     public partial class ExpenditureList
     {
-        public int Id { get; set; }
+        public int mId { get; set; }
         public string item1 { get; set; }
         public string item2 { get; set; }
         public string item3 { get; set; }
@@ -108,12 +108,5 @@ namespace RetireHappy.Models
             return totalAmt;
 
         }
-
-        //function to update memberID field
-        //public void updateMemberID(String MemID)
-        //{
-        //    memberID = MemID;
-        //}
-
     }
 }

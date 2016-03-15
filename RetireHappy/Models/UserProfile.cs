@@ -16,7 +16,7 @@ namespace RetireHappy.Models
     public partial class UserProfile
     {
         public int Id { get; set; }
-
+        public Nullable<int> mId { get; set; }
         [Display(Name = "What is your age?")]
         [Range(12, 99)]
         public Nullable<int> age { get; set; }
@@ -57,7 +57,7 @@ namespace RetireHappy.Models
         public Nullable<double> inflationRate { get; set; }
 
         public string ifUseAvgExp { get; set; }
-    
+
         public virtual Member Member { get; set; }
         public virtual SavingsInfo SavingsInfo { get; set; }
     }

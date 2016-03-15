@@ -7,7 +7,7 @@ using RetireHappy.Models;
 
 namespace RetireHappy.DAL
 {
-    public class ReportMapper : ICommonGateway<User>, ICommonGateway<SavingsInfo>
+    public class ReportMapper : ICommonGateway<UserProfile>, ICommonGateway<SavingsInfo>
     {
 
         public Object ComputeAverage()
@@ -16,7 +16,7 @@ namespace RetireHappy.DAL
             Report report = new Report();
 
             // Assuming all this data are retrieved after calling userProfile.ToList and savingsInfo.ToList
-            User user = new User();
+            UserProfile user = new UserProfile();
             SavingsInfo savingsInfo = new SavingsInfo();
             // Assuming all calculation are done after after calling calculation() in Report object.
 
@@ -40,7 +40,7 @@ namespace RetireHappy.DAL
             return report;
         }
 
-        public User Delete(int? id)
+        public void Insert(UserProfile obj)
         {
             throw new NotImplementedException();
         }
@@ -50,22 +50,7 @@ namespace RetireHappy.DAL
             throw new NotImplementedException();
         }
 
-        public void Insert(User obj)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<User> SelectAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User SelectById(int? id)
         {
             throw new NotImplementedException();
         }
@@ -75,7 +60,12 @@ namespace RetireHappy.DAL
             throw new NotImplementedException();
         }
 
-        public void Update(User obj)
+        public void Update(UserProfile obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        UserProfile ICommonGateway<UserProfile>.Delete(int? id)
         {
             throw new NotImplementedException();
         }
@@ -85,7 +75,17 @@ namespace RetireHappy.DAL
             throw new NotImplementedException();
         }
 
+        IEnumerable<UserProfile> ICommonGateway<UserProfile>.SelectAll()
+        {
+            throw new NotImplementedException();
+        }
+
         IEnumerable<SavingsInfo> ICommonGateway<SavingsInfo>.SelectAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        UserProfile ICommonGateway<UserProfile>.SelectById(int? id)
         {
             throw new NotImplementedException();
         }

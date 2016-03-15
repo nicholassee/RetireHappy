@@ -13,7 +13,7 @@ namespace RetireHappy.Controllers
 {
     public class UsersController : Controller
     {
-        private RetireHappyDBEntities db = new RetireHappyDBEntities();
+        private RetireHappyContext db = new RetireHappyContext();
         private UserGateway userGateway = new UserGateway();
 
         // GET: Users
@@ -108,106 +108,35 @@ namespace RetireHappy.Controllers
             // it will contain values
             //if (Convert.ToBoolean(userProfile.ifUseAvgExp) == true)
             //{
-               // userProfile.avgMonExpenditure = (float)Session["avgMonExpenditure"];
+            // userProfile.avgMonExpenditure = (float)Session["avgMonExpenditure"];
             //}
-            userGateway.Insert(userProfile);
+            if(!string.IsNullOrEmpty((string)Session["userType"]))
+            {
+                userProfile.mId = (int)Session["memberId"];
+                UserProfile tempUserProfile = userGateway.checkIfExistUserProfile((int)userProfile.mId);
+                // default value for null object
+                if (tempUserProfile.Id == 0)
+                {
+                    // if no existing user profile for a member, insert new user profile
+                    userGateway.Insert(userProfile);
+                }
+                else
+                {
+                    // if exist user profile, update.
+                    // have to set back to the same Id before update
+                    Session["updateExisting"] = "true";
+                    userProfile.Id = tempUserProfile.Id;
+                    userGateway.updateUserProfile(userProfile);
+                }
+            }
+            else
+            {
+                userGateway.Insert(userProfile);
+            }
+            
+            
             Session["Id"] = userProfile.Id;
             return RedirectToAction("ComputeSavingsInfo", "SavingsInfos");
-        }
-
-        // GET: Users/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserProfile userProfile = db.UserProfiles.Find(id);
-            if (userProfile == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userProfile);
-        }
-
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "uId,age,gender,expRetAge,retDuration,monIncome,avgMonExpenditure,calcRetSavings,curSavingAmt,timestamp,password,userName")] UserProfile userProfile)
-        {
-            if (ModelState.IsValid)
-            {
-                db.UserProfiles.Add(userProfile);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(userProfile);
-        }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserProfile userProfiles = db.UserProfiles.Find(id);
-            if (userProfiles == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userProfiles);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "uId,age,gender,expRetAge,retDuration,monIncome,avgMonExpenditure,calcRetSavings,curSavingAmt,timestamp,password,userName")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserProfile userProfile = db.UserProfiles.Find(id);
-            if (userProfile == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userProfile);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            UserProfile userProfile = db.UserProfiles.Find(id);
-            db.UserProfiles.Remove(userProfile);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
