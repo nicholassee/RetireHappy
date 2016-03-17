@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using RetireHappy.DAL;
 using RetireHappy.Models;
+using System.Text.RegularExpressions;
 
 namespace RetireHappy.Controllers
 {
@@ -24,6 +25,7 @@ namespace RetireHappy.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
+                searchString = Regex.Replace(searchString, "[^A-Za-z0-9\\s$]", "");
                 avgExpItemList = avgExpItemList.Where(i => i.category.Contains(searchString)
                 || i.type.Contains(searchString));
 
