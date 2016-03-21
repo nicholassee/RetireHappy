@@ -16,18 +16,6 @@ namespace RetireHappy.Controllers
         private RetireHappyContext db = new RetireHappyContext();
         private UserGateway userGateway = new UserGateway();
 
-        // GET: Users
-        public ActionResult Index()
-        {
-            return View(userGateway.SelectAll());
-        }
-
-        // GET: Users/selectGender
-        public ActionResult selectGender()
-        {
-            return View();
-        }
-
         // GET: Users/calculatorStep1
         public ActionResult CalculatorStep1()
         {

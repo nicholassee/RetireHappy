@@ -493,17 +493,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\SavingsInfos\Create.cshtml" />
-    <Content Include="Views\SavingsInfos\Delete.cshtml" />
-    <Content Include="Views\SavingsInfos\Details.cshtml" />
-    <Content Include="Views\SavingsInfos\Edit.cshtml" />
-    <Content Include="Views\SavingsInfos\Index.cshtml" />
-    <Content Include="Views\Users\CalculatorStep1_bk.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\SavingsInfos\ComputeSavingsInfo.cshtml" />
     <Content Include="Views\Report\Table.cshtml" />
@@ -544,10 +533,6 @@
     <Content Include="Views\Users\CalculatorStep1.cshtml" />
     <Content Include="Views\Users\CalculatorStep3.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
-    <Content Include="Views\Member\Delete.cshtml" />
-    <Content Include="Views\Member\Details.cshtml" />
-    <Content Include="Views\Member\Edit.cshtml" />
-    <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>

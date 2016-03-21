@@ -16,12 +16,6 @@ namespace RetireHappy.Controllers
         private RetireHappyContext db = new RetireHappyContext();
         private SavingInfosGateway savingInfosGateway = new SavingInfosGateway();
 
-        // GET: SavingsInfos
-        public ActionResult Index()
-        {
-            return View(db.SavingsInfoes.ToList());
-        }
-
         // method to receive and compute savingsinfo
         // GET: SavingsInfos/computeSavginsInfo
         public ActionResult ComputeSavingsInfo()
@@ -83,117 +77,7 @@ namespace RetireHappy.Controllers
             }
             return View(savingsInfo);
         }
-
-        // GET: SavingsInfos/calculatorStep4/5
-        public ActionResult calculatorStep4(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SavingsInfo savingsInfo = savingInfosGateway.SelectById(id);
-            if (savingsInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(savingsInfo);
-        }
-
-        // GET: SavingsInfos/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
-            if (savingsInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(savingsInfo);
-        }
-
-        // GET: SavingsInfos/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SavingsInfos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "uId,calcRetSavings,savePercent,riskLevel,expPercent,diffPercent")] SavingsInfo savingsInfo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.SavingsInfoes.Add(savingsInfo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(savingsInfo);
-        }
-
-        // GET: SavingsInfos/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SavingsInfo savingsInfo = db.SavingsInfoes.Find( Convert.ToInt32(id) );
-            if (savingsInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(savingsInfo);
-        }
-
-        // POST: SavingsInfos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "uId,calcRetSavings,savePercent,riskLevel,expPercent,diffPercent")] SavingsInfo savingsInfo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(savingsInfo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(savingsInfo);
-        }
-
-        // GET: SavingsInfos/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
-            if (savingsInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(savingsInfo);
-        }
-
-        // POST: SavingsInfos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            SavingsInfo savingsInfo = db.SavingsInfoes.Find(id);
-            db.SavingsInfoes.Remove(savingsInfo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+   
         protected override void Dispose(bool disposing)
         {
             if (disposing)

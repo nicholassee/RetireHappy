@@ -30,8 +30,8 @@ namespace RetireHappy.Controllers
             }
             return View(avgExpItemList.ToList());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
+
         public ActionResult Tabulate(String idArr)
         {
 
