@@ -23,12 +23,15 @@ namespace RetireHappy.Models
     
         public int mId { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(Name = "Password", Prompt = "Password")]
         [Required(ErrorMessage = "Please enter password")]
+        [StringLength(255, MinimumLength = 8)]
+        [DataType(DataType.Password)]
         public string password { get; set; }
 
-        [Display(Name = "Username")]
+        [Display(Name = "Username", Prompt = "Username")]
         [Required(ErrorMessage = "Please enter username")]
+        [StringLength(30, MinimumLength = 6)]
         public string userName { get; set; }
     
         public virtual ExpenditureList ExpenditureList { get; set; }

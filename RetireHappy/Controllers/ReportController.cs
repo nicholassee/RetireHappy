@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RetireHappy.DAL;
 using RetireHappy.Models;
-using ClosedXML;
 using ClosedXML.Excel;
 using System.Data;
 using System.IO;
@@ -20,29 +18,35 @@ namespace RetireHappy.Controllers
         // GET: Report
         public ActionResult Index()
         {
-            return View(reportMapper.ComputeAverage());
+            Report report = new Report();
+            report.updateData();
+            return View(report);
         }
 
         // GET: Report
         public ActionResult Table()
         {
-            return View(reportMapper.ComputeAverage());
+            Report report = new Report();
+            report.updateData();
+            return View(report);
         }
 
         public ActionResult ExportData()
         {
             //http://www.c-sharpcorner.com/UploadFile/rahul4_saxena/export-data-table-to-excel-in-Asp-Net-mvc-4/
-            Report report = (Report)reportMapper.ComputeAverage();
+            //Report report = (Report)reportMapper.retrieveInfo();
+            Report report = new Report();
+            report.updateData();
 
-            DataTable dt = new DataTable();
-            dt.TableName = "Total Response for Both Gender";
-            dt.Columns.Add(new DataColumn("Male", typeof(string)));
-            dt.Columns.Add(new DataColumn("Female", typeof(string)));
+            DataTable dt1 = new DataTable();
+            dt1.TableName = "Total Response for Both Gender";
+            dt1.Columns.Add(new DataColumn("Male", typeof(string)));
+            dt1.Columns.Add(new DataColumn("Female", typeof(string)));
 
-            DataRow row = dt.NewRow();
+            DataRow row = dt1.NewRow();
             row["Male"] = report.male;
             row["Female"] = report.female;
-            dt.Rows.Add(row);
+            dt1.Rows.Add(row);
 
             DataTable dt2 = new DataTable();
 
@@ -84,7 +88,7 @@ namespace RetireHappy.Controllers
 
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(dt);
+                wb.Worksheets.Add(dt1);
                 wb.Worksheets.Add(dt2);
                 wb.Worksheets.Add(dt3);
                 wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -107,10 +111,5 @@ namespace RetireHappy.Controllers
             return RedirectToAction("Index", "ExportData");
         }
 
-
-        public ActionResult Test()
-        {
-            return View(reportMapper.ComputeAverage());
-        }
     }
 }

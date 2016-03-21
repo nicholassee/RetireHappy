@@ -26,33 +26,38 @@
 <h1 class="page-header">Update Data</h1>
 <div>
     <h3 class="text-success">@Html.Raw(ViewBag.SuccessMsg)</h3>
+    @using (Html.BeginForm("Verify", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
     <div class="form-horizontal">
         <div class="form-group">
             <div class="control-label col-md-2">
                 <label> Admin Code: </label>
             </div>
             <div class="col-md-5">
-                <input type="text" id="adminCode" name="adminCode" class="form-control" />
+                <input type="text" id="adminCode" name="adminCode" class="form-control" @if (ViewBag.admin == "true") {@Html.Raw("disabled")} else { @Html.Raw("enabled"); }/>
             </div>
             <div class="col-md-5">
-                <input type="submit" id="verify" value="Verify" class="btn btn-default" />
+                <input type="submit" id="verify" value="Verify" class="btn btn-default" @if (ViewBag.admin == "true") {@Html.Raw("disabled")} else { @Html.Raw("enabled"); }/>
+            </div>
+            <div class="col-md-offset-2 col-md-5">
+                <span class="text-danger">@Html.Raw(ViewBag.AdminCodeError)</span>
             </div>
         </div>
     </div>
-
+    }
     @using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="form-horizontal">
             <div class="form-group">
                 <div class="control-label col-md-2">
-                    <label id="fileLabel" style="display:none"> File: </label>
+                    <label id="fileLabel" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}> File: </label>
                 </div>
                 <div class="col-md-5">
-                    <label id="customUpload" for="uploadFile" class="custom-file-upload" style="display:none">
+                    <label id="customUpload" for="uploadFile" class="custom-file-upload" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}>
                         Browse
-                        <input id="uploadFile" type="file" name="uploadFile" style="display:none" disabled/>
+                        <input id="uploadFile" type="file" name="uploadFile" style="display:none" @if (ViewBag.admin == "true") {@Html.Raw("enabled")} else { @Html.Raw("disabled"); }/>
                     </label>
-                    <span id="uploadMsg" style="display:none"> Choose your excel file </span>
+                    <span id="uploadMsg" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}> Choose your excel file </span>
                 </div>
                 <div class="col-md-offset-2 col-md-10">
                     <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
@@ -60,30 +65,12 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" id="fileSubmit" value="Update" class="btn btn-default" style="display:none" disabled/>
+                    <input type="submit" id="fileSubmit" value="Update" class="btn btn-default" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")} @if (ViewBag.admin == "true") {@Html.Raw("enabled")} else { @Html.Raw("disabled"); }/>
                 </div>
             </div>
         </div>
     }
 </div>
-
-<script>
-    document.getElementById("verify").addEventListener("click", Verify);
-
-    function Verify() {
-        if (document.getElementById("adminCode").value == "retireHappy123") {
-            document.getElementById("fileSubmit").disabled = false;
-            document.getElementById("uploadFile").disabled = false;
-            document.getElementById("adminCode").disabled = true;
-            document.getElementById("customUpload").style.display = "initial";
-            document.getElementById("uploadMsg").style.display = "initial";
-            document.getElementById("fileSubmit").style.display = "initial";
-            document.getElementById("fileLabel").style.display = "initial";
-        } else {
-            alert("Admin code is incorrect, please contact RetireHappy for further assistance.");
-        }
-    };
-</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

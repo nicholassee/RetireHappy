@@ -1,7 +1,7 @@
 ﻿@model RetireHappy.Models.Report
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Report in Chart";
 }
 
 
@@ -16,10 +16,22 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.tooltip.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/flot/jquery.flot.categories.js")"></script>
 
-    <script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/morrisjs/morris.min.js")"></script>
+    
+   <script>
     $(document).ready(function() {
         console.log("document ready");
         var offset = 0;
+
+
+        Morris.Donut({
+            element: 'donut',
+            data: [
+              {label: "Male", value: @Html.DisplayFor(model => model.male)},
+              {label: "Female", value: @Html.DisplayFor(model => model.female)},
+            ]
+        });
 
         //Flot Pie Chart
         $(function () {
@@ -114,9 +126,8 @@
     </script>
 }
 
-<h2>Statistic</h2>
+<h1 class="page-header">Statistic</h1>
 
-<!-- /.col-lg-6 -->
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -133,7 +144,26 @@
     <!-- /.panel -->
 </div>
 
-<!-- /.col-lg-12 -->
+<!-- /.col-lg-6 -->
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Total Response for Both Gender
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+
+            <div id="donut"></div>
+
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+
+<!-- /.col-lg-6 -->
+
+<!-- /.col-lg-6 -->
 <div class="col-lg-6">
     <div class="panel panel-default">
         <div class="panel-heading">

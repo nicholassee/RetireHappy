@@ -38,19 +38,19 @@ namespace RetireHappy.Controllers
             return View(member);
         }
 
-        // GET: Member/Create
-        public ActionResult Create()
+        // GET: Member/Register
+        public ActionResult Register()
         {
             ViewBag.mId = new SelectList(db.ExpenditureLists, "mId", "item1");
             return View();
         }
 
-        // POST: Member/Create
+        // POST: Member/Register
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "mId,userName,password")] Member member)
+        public ActionResult Register([Bind(Include = "mId,userName,password")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace RetireHappy.Controllers
                 else
                 {
                     ViewBag.Error = "Username taken!";
-                    return View("Create");
+                    return View("Register");
                 }
                 
             }
@@ -99,6 +99,7 @@ namespace RetireHappy.Controllers
                 {
                     Session["userType"] = "Member";
                     Session["memberId"] = tempMember.mId;
+                    Session["username"] = tempMember.userName;
                     return RedirectToAction("Index");
                 }
             }

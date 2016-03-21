@@ -3,96 +3,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RetireHappy.Models;
-
+using System.Data.Entity.Infrastructure;
 
 namespace RetireHappy.DAL
 {
-    public class ReportMapper : ICommonGateway<UserProfile>, ICommonGateway<SavingsInfo>
+    public class ReportMapper
     {
+        //private IObjectContextAdapter ctx;
+        //do overloading, one to return int another, double
+              
 
-        public Object ComputeAverage()
+        private static int currentYear = DateTime.Now.Year;
+        private static int previousYear = currentYear - 1;
+        private static int nextYear = currentYear + 1;
+
+        List<string> sql = new List<string>(
+            new string[] {
+                "SELECT COUNT(*) FROM UserProfile where Gender='Male' AND timestamp > '" + previousYear + "' AND timestamp < '" + nextYear + "'",
+                "SELECT COUNT(*) FROM UserProfile where Gender='Female' AND timestamp > '" + previousYear + "' AND timestamp < '" + nextYear + "'",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings < 1000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings BETWEEN 1001 and 2000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings BETWEEN 2001 and 3000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings BETWEEN 3001 and 4000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings BETWEEN 4001 and 5000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings BETWEEN 5001 and 6000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE calcRetSavings > 6000",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 25 AND 34",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 25 AND 34",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 35 AND 44",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 45 AND 54",
+                "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 55 AND 64"
+            });
+
+        //public Report retrieveInfo()
+        public String retrieveInfo(int ind)
         {
-            // for prototype purposes only, user profile and savings info are not yet access for prototype report implementation
-            Report report = new Report();
+            RetireHappyContext db = new RetireHappyContext();
+       
 
-            // Assuming all this data are retrieved after calling userProfile.ToList and savingsInfo.ToList
-            UserProfile user = new UserProfile();
-            SavingsInfo savingsInfo = new SavingsInfo();
-            // Assuming all calculation are done after after calling calculation() in Report object.
+            using (db) {
+                if (ind == -1)
+                {
+                    return currentYear.ToString();
+                }
+                else if (ind >= 0 && ind <= 1)
+                {
 
-            //report.year = 2016;
-            //report.male = 1350;
-            //report.female = 1230;
-            //report.inc_below_1000 = 870;
-            //report.inc_1001_2000 = 1300;
-            //report.inc_2001_3000 = 2400;
-            //report.inc_3001_4000 = 3056;
-            //report.inc_4001_5000 = 4678;
-            //report.inc_5001_6000 = 5836;
-            //report.inc_above_6000 = 6903;
-            //report.ageRange_below_25 = 1600;
-            //report.ageRange_25_34 = 1833;
-            //report.ageRange_35_44 = 1735;
-            //report.ageRange_45_54 = 1246;
-            //report.ageRange_55_64 = 1405;
-            report = report.calculate(user,savingsInfo);
+                    int res = db.Database.SqlQuery<int>(sql.ElementAt(ind)).Single();
+                    return res.ToString();
 
-            return report;
+                }
+                else
+                {
+                    var temp = db.Database.SqlQuery<double?>(sql.ElementAt(ind)).FirstOrDefault();
+                    double res = 0.0;
+
+                    if (temp != null)
+                    {
+                        res = Convert.ToDouble(temp);
+                    }
+                    
+                    res= Math.Round(res, 2);
+                    return res.ToString();
+                }
+            }
+
+           
+           
+           
         }
-
-        public void Insert(UserProfile obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(SavingsInfo obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(SavingsInfo obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(UserProfile obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        UserProfile ICommonGateway<UserProfile>.Delete(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        SavingsInfo ICommonGateway<SavingsInfo>.Delete(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<UserProfile> ICommonGateway<UserProfile>.SelectAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<SavingsInfo> ICommonGateway<SavingsInfo>.SelectAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        UserProfile ICommonGateway<UserProfile>.SelectById(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        SavingsInfo ICommonGateway<SavingsInfo>.SelectById(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

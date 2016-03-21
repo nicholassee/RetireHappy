@@ -19,6 +19,7 @@ namespace RetireHappy.Models
         public Nullable<int> mId { get; set; }
         [Display(Name = "What is your age?")]
         [Range(12, 99)]
+        [Required]
         public Nullable<int> age { get; set; }
 
         [Display(Name = "What is your gender?")]
@@ -27,6 +28,7 @@ namespace RetireHappy.Models
 
         [Display(Name = "Your Expected Retirement Age")]
         [Range(18, 99)]
+        [Required]
         public Nullable<int> expRetAge { get; set; }
 
         [Display(Name = "Retirement Duration(years)")]
@@ -35,6 +37,7 @@ namespace RetireHappy.Models
 
         [Display(Name = "Your Monthly Take Home Pay")]
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
+        [Required]
         public Nullable<double> monIncome { get; set; }
 
         [Display(Name = "Monthly Expenditure")]
@@ -42,18 +45,22 @@ namespace RetireHappy.Models
         public Nullable<double> avgMonExpenditure { get; set; }
 
         [Display(Name = "Current Monthly Savings Amount")]
+        [Required]
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> curSavingAmt { get; set; }
 
         [Display(Name = "Desired Monthly Retirement Income")]
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
+        [Required]
         public Nullable<double> desiredMonRetInc { get; set; }
 
         [Display(Name = "Departure Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yy}", ApplyFormatInEditMode = true)]
+        [Required]
         public Nullable<System.DateTime> timestamp { get; set; }
 
         [Display(Name = "Inflation Rate")]
+        [Required]
         public Nullable<double> inflationRate { get; set; }
 
         public string ifUseAvgExp { get; set; }

@@ -64,19 +64,27 @@ namespace RetireHappy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate, ifUseAvgExp")] UserProfile userProfile)
         {
-            Session["age"] = userProfile.age;
-            Session["monIncome"] = userProfile.monIncome;
-            Session["curSavingAmt"] = userProfile.curSavingAmt;
-            Session["avgMonExpenditure"] = userProfile.avgMonExpenditure;
-            Session["inflationRate"] = userProfile.inflationRate;
-            Session["ifUseAvgExp"] = userProfile.ifUseAvgExp;
-            if (Convert.ToBoolean(userProfile.ifUseAvgExp) == false)
+            if (userProfile.age == null)
             {
-                return RedirectToAction("CalculatorStep3");
+                //Return the same page with error massage
+                return View();
             }
             else
             {
-                return RedirectToAction("Index", "Expenditure");
+                Session["age"] = userProfile.age;
+                Session["monIncome"] = userProfile.monIncome;
+                Session["curSavingAmt"] = userProfile.curSavingAmt;
+                Session["avgMonExpenditure"] = userProfile.avgMonExpenditure;
+                Session["inflationRate"] = userProfile.inflationRate;
+                Session["ifUseAvgExp"] = userProfile.ifUseAvgExp;
+                if (Convert.ToBoolean(userProfile.ifUseAvgExp) == false)
+                {
+                    return RedirectToAction("CalculatorStep3");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Expenditure");
+                }
             }
         }
 

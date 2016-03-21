@@ -1,14 +1,17 @@
 ﻿@model RetireHappy.Models.Report
 
 @{
-    ViewBag.Title = "Table";
+    ViewBag.Title = "Report";
 }
 
-<h2>Statistic</h2>
+<h1 class="page-header">Statistics</h1>
 
-@using (Html.BeginForm("ExportData", "Report", FormMethod.Post))
+@if (Session["memberId"] != null)
 {
+    using (Html.BeginForm("ExportData", "Report", FormMethod.Post))
+    {
     <input type="submit" name="btnExportReport" value="Export to Excel" class="btn btn-primary btn-lg" />
+    }
 }
 
 <h3>Total Response for Both Gender</h3>
