@@ -321,6 +321,7 @@
       <DependentUpon>RetireHappyContext.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\RetireHappy - Web Deploy.pubxml" />
+    <Content Include="Scripts\expenditure.js" />
     <Content Include="Scripts\flot-data.js" />
     <Content Include="Scripts\flot\.bower.json" />
     <Content Include="Scripts\flot\.gitignore" />

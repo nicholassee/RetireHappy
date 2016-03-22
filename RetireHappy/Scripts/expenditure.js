@@ -15,7 +15,15 @@
             //alert(liIds);
 
             //pass back to controller
-            $.get('@Url.Action("Tabulate", "Expenditure")', { idArr: liIds });
+            //$.get('@Url.Action("Tabulate", "Expenditure")', { idArr: liIds });
+            var url = $(this).data('request-url');
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: { idArr: liIds },
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+            })
 
         });
         ////http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-Modal-Dial

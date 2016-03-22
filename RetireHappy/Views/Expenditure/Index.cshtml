@@ -17,15 +17,15 @@
         Total Amount: $<div id="totalAmt">00.00</div>
     </div>
     <br>
-    @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
-    {
-        <button class="btn btn-outline btn-info btn-sm" style="float:right" type="submit" id="Done" disabled>Done</button>
-    }
+        @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
+        {
+            <button class="btn btn-outline btn-info btn-sm"  data-request-url="@Url.Action("Tabulate", "Expenditure")" style="float:right" type="submit" id="Done" disabled>Done</button>
+        }
 </div>
 <h2>Add Expenditures</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="~/Scripts/expenditure.js"></script>
+<script src="/Scripts/expenditure.js"></script>
 
 
 @using (Html.BeginForm())
