@@ -1,8 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +39,45 @@
                 <a class="navbar-brand" href="@Url.Action("Index", "Home", null, "http")">Retire Happy</a>
             </div>
             <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                
+                @if (Session["memberId"] != null)
+                {
+                <li>Welcome @Html.Encode(Session["username"])</li>
 
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Personal Retirement Report</a>
+                        </li>
+                        <!--
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        -->
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("logout", "member", null, "http")"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("register", "member", null, "http")"><i class="fa fa-user fa-fw"></i> Register</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("login", "member", null, "http")"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                    </li>
+                }
+                <!-- /.dropdown -->
+            </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
@@ -66,11 +102,11 @@
                             <!-- /.nav-second-level -->
                         </li>
 
-
                         <li>
                             <a href="@Url.Action("upload", "admin", null, "http")"><i class="fa fa-edit fa-fw"></i> Update Data </a>
                         </li>
                        
+
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

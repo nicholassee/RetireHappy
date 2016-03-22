@@ -4,8 +4,7 @@
     ViewBag.Title = "Calculator Step 2";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
 <script>
     $(document).ready(function () {
         $("#manBtn").click(function () { //avgExpInput
@@ -34,14 +33,14 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.age, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-5">
                 @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.monIncome, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-5">
                 @Html.EditorFor(model => model.monIncome, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.monIncome, "", new { @class = "text-danger" })
             </div>
@@ -50,7 +49,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.curSavingAmt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-5">
                 @Html.EditorFor(model => model.curSavingAmt, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.curSavingAmt, "", new { @class = "text-danger" })
             </div>
@@ -59,15 +58,15 @@
         <div class="form-group">
 
             @Html.LabelFor(model => model.avgMonExpenditure, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+           
+            <div class="col-md-5">
                 @*@Html.RadioButton("Gender", "Male", new { @checked = true})*@
                 @*<input id="manBtn" type="radio" value="1" name="expTypeGroup" checked="checked"/>*@
-                @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn" })
-                <div id="avgExpInput" style="display:inline">
-                    @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn" })
+                    <div id="avgExpInput"> @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })</div>
                     @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
-                </div>
             </div>
+         
             <div class="col-md-offset-2 col-md-10">
                 <br />
                 @Html.RadioButtonFor(model => model.ifUseAvgExp, "true", new { @id = "useAvgBtn" }) <Label>Choose from national average list</Label>
