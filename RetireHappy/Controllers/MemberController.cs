@@ -14,9 +14,13 @@ namespace RetireHappy.Controllers
     public class MemberController : Controller
     {
         private RetireHappyContext db = new RetireHappyContext();
-        private MemberGateway memberGateway = new MemberGateway();
-        private ExpenditureGateway expenditureGateway = new ExpenditureGateway();
-        private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
+        //private MemberGateway memberGateway = new MemberGateway();
+        //private ExpenditureGateway expenditureGateway = new ExpenditureGateway();
+        //private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
+        //private ICommonGateway<T> commonGateway; or this? but this has error of object being null
+        private ICommonGateway<Member> memberGateway = new MemberGateway();
+        private ICommonGateway<ExpenditureList> expenditureGateway = new ExpenditureGateway();
+        private ICommonGateway<AvgExpenditure> avgExpenditureGateway = new AvgExpenditureGateway();
 
         // GET: Member/Register
         public ActionResult Register()
@@ -34,7 +38,7 @@ namespace RetireHappy.Controllers
         {
             if (ModelState.IsValid)
             {
-                Member tempMember = memberGateway.SearchByUsername(member.userName);
+                Member tempMember = ((MemberGateway)memberGateway).SearchByUsername(member.userName);
                 // default values if no result found
                 if (tempMember.mId == 0 && tempMember.userName == null && tempMember.password == null)
                 {
@@ -69,7 +73,7 @@ namespace RetireHappy.Controllers
         {
             if (ModelState.IsValid)
             {
-                Member tempMember = memberGateway.verifyCredential(member.userName, member.password);
+                Member tempMember = ((MemberGateway)memberGateway).verifyCredential(member.userName, member.password);
                 if (tempMember.mId == 0 && tempMember.userName == null && tempMember.password == null)
                 {
                     ViewBag.Error = "Incorrect username or password!";
@@ -99,10 +103,10 @@ namespace RetireHappy.Controllers
         public ActionResult MemberExpenditureList()
         {
 
-            ExpenditureList expenditureList = expenditureGateway.checkExistingExpList((int)Session["memberId"]);
+            ExpenditureList expenditureList = ((ExpenditureGateway)expenditureGateway).checkExistingExpList((int)Session["memberId"]);
             if (expenditureList.mId != 0)
             {
-                IEnumerable<AvgExpenditure> avgExpenditure = avgExpenditureGateway.MatchExpenditureList(expenditureList.mId);
+                IEnumerable<AvgExpenditure> avgExpenditure = ((AvgExpenditureGateway)avgExpenditureGateway).MatchExpenditureList(expenditureList.mId);
                 ViewBag.total = expenditureList.calcTotalExpenditure(avgExpenditure);
                 return View(avgExpenditure.ToList());
             }

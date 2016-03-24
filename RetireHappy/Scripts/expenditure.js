@@ -40,8 +40,8 @@
             var initAmt = parseFloat(initAmtstr);
 
             //modifying Buttons in View
-            addCount+=1;
-            if ((addCount) > 0 && addCount < 11) {
+            if (addCount > -1 && addCount < 10) {
+                addCount += 1;
                 var end = initAmt + tempAmt;
                 $("div#totalAmt").text(end.toFixed(2).toString());
                 $("div#NumItems").text("View Selected(" + addCount.toString() + ")");
@@ -57,7 +57,7 @@
             }
             else {
                 
-                alert("Added "+(addCount-1)+" Items already!");
+                alert("Added "+(addCount)+" Items already!");
             }
             //addCount++;
         });
@@ -74,7 +74,7 @@
             var initAmtstr = document.getElementById('totalAmt');
             var initAmt = parseFloat(initAmtstr.innerText);
             
-            //alert("string on total text field: " + initAmt + ". " + "\n - \n avgAmtVal: " + tempAmt + "new total: " + end);
+            alert("Removing" + addCount);
 
             
             if ((addCount-1) >= -1) {
