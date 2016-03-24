@@ -536,6 +536,7 @@
     <Content Include="Views\Users\CalculatorStep3.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
+    <Content Include="Views\Member\MemberExpenditureList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

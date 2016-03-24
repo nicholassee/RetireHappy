@@ -48,10 +48,15 @@ namespace RetireHappy.DAL
                 }
                 else if (ind >= 0 && ind <= 1)
                 {
-
-                    int res = db.Database.SqlQuery<int>(sql.ElementAt(ind)).Single();
-                    return res.ToString();
-
+                    try {
+                        int res = db.Database.SqlQuery<int>(sql.ElementAt(ind)).Single();
+                        return res.ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write(e);
+                        return "0.0";
+                    }  
                 }
                 else
                 {

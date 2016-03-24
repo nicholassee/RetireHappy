@@ -108,5 +108,14 @@ namespace RetireHappy.Models
             return totalAmt;
 
         }
+        public double calcTotalExpenditure(IEnumerable<AvgExpenditure> avgExpenditure)
+        {
+            double totalAmt = 0;
+            foreach(AvgExpenditure tempAvgExpenditure in avgExpenditure)
+            {
+                totalAmt += (double)tempAvgExpenditure.avgAmount;
+            }
+            return totalAmt;
+        }
     }
 }

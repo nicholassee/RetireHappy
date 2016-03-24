@@ -15,6 +15,8 @@ namespace RetireHappy.Controllers
     {
         private RetireHappyContext db = new RetireHappyContext();
         private MemberGateway memberGateway = new MemberGateway();
+        private ExpenditureGateway expenditureGateway = new ExpenditureGateway();
+        private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
 
         // GET: Member/Register
         public ActionResult Register()
@@ -91,6 +93,21 @@ namespace RetireHappy.Controllers
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult MemberExpenditureList()
+        {
+
+            ExpenditureList expenditureList = expenditureGateway.checkExistingExpList((int)Session["memberId"]);
+            if (expenditureList.mId != 0)
+            {
+                IEnumerable<AvgExpenditure> avgExpenditure = avgExpenditureGateway.MatchExpenditureList(expenditureList.mId);
+                ViewBag.total = expenditureList.calcTotalExpenditure(avgExpenditure);
+                return View(avgExpenditure.ToList());
+            }
+            ViewBag.EmptyList = "true";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

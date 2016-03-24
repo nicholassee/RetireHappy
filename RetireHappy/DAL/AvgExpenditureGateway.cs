@@ -100,5 +100,23 @@ namespace RetireHappy.DAL
             db.Database.ExecuteSqlCommand(query, avgExpenditure.category, avgExpenditure.type, avgExpenditure.recordYear, avgExpenditure.avgAmount, avgExpenditure.eId);
             Save();
         }
+
+        public IEnumerable<AvgExpenditure> MatchExpenditureList(int mId)
+        {
+            string query = "SELECT * FROM AvgExpenditure A WHERE EXISTS " +
+            "(SELECT * FROM ExpenditureList E WHERE E.mId = {0} " +
+            "AND(A.eId = E.item1 OR A.eId = E.item2 OR A.eId = E.item3 OR A.eId = E.item4 OR A.eId = E.item5 " +
+            "OR A.eId = E.item6 OR A.eId = E.item7 OR A.eId = E.item8 OR A.eId = E.item9 OR A.eId = E.item10))";
+            try
+            {
+                IEnumerable<AvgExpenditure> avgExpenditure = db.Database.SqlQuery<AvgExpenditure>(query, mId);
+                return avgExpenditure;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+            }
+            return null;
+        }
     }
 }
