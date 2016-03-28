@@ -7,6 +7,24 @@
 @section CSS
 {
     <link href="@Url.Content("~/Content/DataTables/css/jquery.dataTables.min.css")" rel="stylesheet" />
+    <style type="text/css">
+        .dataTables_wrapper .dataTables_length {
+            float: right;
+        }
+        .dataTables_wrapper .dataTables_filter {
+            float: left;
+            text-align: left;
+        }
+        table.dataTable thead .sorting_asc {
+          background: url("..Content/DataTables/images/sort_asc.png") no-repeat center left;
+        }
+        table.dataTable thead .sorting_desc {
+          background: url("..Content/DataTables/images/sort_desc.png") no-repeat center left;
+        }
+        table.dataTable thead .sorting {
+          background: url("..Content/DataTables/images/sort_both.png") no-repeat center left;
+        }
+    </style>
 }
 
 @section scripts
@@ -15,7 +33,14 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/expenditure.js")"></script>
 <script>
     $(document).ready(function () {
-        $('#expenditureTable').DataTable();
+        $('#expenditureTable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                { "orderable": false }
+            ]
+        });
     });
 </script>
 }
@@ -59,22 +84,14 @@
     </div>
 </div>
 
-@using (Html.BeginForm())
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString")
-        <button type="submit" class="btn btn-default" value="Search">Search</button>
-    </p>
-}
-
-<table id="expenditureTable" class="table display" cellspacing="0" width="100%">
+<table id="expenditureTable" class="display" cellspacing="0">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.type)
+                @Html.DisplayNameFor(model => model.category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.category)
+                @Html.DisplayNameFor(model => model.type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.avgAmount)
@@ -87,17 +104,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.type)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.category)
+                </td>
+                <td style="width:20%; word-wrap: break-word;">
+                    @Html.DisplayFor(modelItem => item.type)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.avgAmount)
                 </td>
                 <td>
-                    <button class="btn btn-outline btn-default" id="AddBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)">Add</button>
-                    <button class="btn btn-outline btn-info " id="RemBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)" style="display:none;">Remove</button>
+                    <button class="btn btn-outline btn-default" id="AddBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)?@Html.Raw(item.type)?@Html.Raw(item.avgAmount)">Add</button>
+                    <button class="btn btn-outline btn-info " id="RemBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)?@Html.Raw(item.type)?@Html.Raw(item.avgAmount)" style="display:none;">Remove</button>
                 </td>
 
             </tr>
