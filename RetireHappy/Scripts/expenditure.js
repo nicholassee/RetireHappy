@@ -3,7 +3,9 @@
         var numItems = 0;
         var totalAmount = parseFloat("0.00");
 
+        // Hide the done button if cart is empty
         if (addCount == 0) {
+            $("#Done").hide();
             $("#Done").prop("disabled", true);
         }
 
@@ -43,10 +45,11 @@
             if (addCount > -1 && addCount < 10) {
                 addCount += 1;
                 var end = initAmt + tempAmt;
-                $("div#totalAmt").text(end.toFixed(2).toString());
-                $("div#NumItems").text("View Selected(" + addCount.toString() + ")");
+                $("#totalAmt").text(end.toFixed(2).toString());
+                $("#NumItems").text("View Selected(" + addCount.toString() + ")");
 
                 //enable Done button
+                $("#Done").show();
                 $("#Done").prop("disabled", false);
 
 
@@ -79,14 +82,17 @@
             
             if ((addCount-1) >= -1) {
                 var end = initAmt - tempAmt.toFixed(2);
-                $("div#totalAmt").text(end.toFixed(2).toString());
-                if ((addCount-1) == 0) {
+                $("#totalAmt").text(end.toFixed(2).toString());
+
+                // Hide the done button if cart is empty
+                if ((addCount - 1) == 0) {
+                    $("#Done").hide();
                     $("#Done").prop('disabled', true);
                 }
                 
             }
-            addCount -= 1;
-            $("div#NumItems").text("View Selected(" + addCount.toString() + ")");
+            addCount--;
+            $("#NumItems").text("View Selected(" + addCount.toString() + ")");
            
 
             $(this).hide();
@@ -95,6 +101,11 @@
             $('li').filter(function () { return $.text([this]) === arr[1]; }).remove();
                 
             
+        });
+
+        // Prevent default behaviour
+        $('a#detail').click(function (e) {
+            e.preventDefault();
         });
 
     });
