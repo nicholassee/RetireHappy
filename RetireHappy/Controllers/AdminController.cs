@@ -10,6 +10,8 @@ using OfficeOpenXml;
 using System.IO;
 using System;
 using NPOI.SS.UserModel;
+using System.Text.RegularExpressions;
+using System.Web.Hosting;
 
 namespace RetireHappy.Controllers
 {
@@ -20,30 +22,6 @@ namespace RetireHappy.Controllers
 
         public ActionResult Upload()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase uploadFile)
-        {
-            if(uploadFile == null || uploadFile.ContentLength == 0)
-            {
-                ViewBag.Error = "Please select a excel file";
-                return View("Upload");
-            }
-            else
-            {
-                if(uploadFile.FileName.EndsWith("xls") || uploadFile.FileName.EndsWith("xlsx"))
-                {
-                    avgExpenditureGateway.UploadDataset(uploadFile); 
-                    ViewBag.SuccessMsg = "Data has been updated";
-                }
-                else
-                {
-                    ViewBag.Error = "File type is unsupported";
-                    return View("Upload");
-                }
-            }
             return View();
         }
 
@@ -62,7 +40,23 @@ namespace RetireHappy.Controllers
             return View("Upload");
         }
 
-       
+        [HttpPost]
+        public ActionResult Sync()
+        {
+            string url = "http://www.singstat.gov.sg/publications/household-expenditure-survey";
+            string dwlLink = "www.singstat.gov.sg";
+
+            bool result = avgExpenditureGateway.SyncDataset(url, dwlLink);
+            if (result) {
+                ViewBag.SuccessMsg = "Data has been updated";
+            }
+            else
+            {
+                ViewBag.Error = "Download link is down, please contact administrator";
+            }
+            return View("Upload");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

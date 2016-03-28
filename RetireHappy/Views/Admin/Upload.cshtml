@@ -5,22 +5,22 @@
 }
 
 @section CSS{
-     <style>
+    <style>
         #customUpload {
-        border: 1px solid #ccc;
-        display: inline-block;
-        padding: 6px 12px;
-        cursor: pointer;
-        -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-        text-align: center;
-        font-weight: normal;
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            text-align: center;
+            font-weight: normal;
         }
 
-        #customUpload:hover{
-            background-color: whitesmoke;
-        }
-    </style> 
+            #customUpload:hover {
+                background-color: whitesmoke;
+            }
+    </style>
 }
 
 <h1 class="page-header">Update Data</h1>
@@ -28,45 +28,33 @@
     <h3 class="text-success">@Html.Raw(ViewBag.SuccessMsg)</h3>
     @using (Html.BeginForm("Verify", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="control-label col-md-2">
-                <label> Admin Code: </label>
-            </div>
-            <div class="col-md-5">
-                <input type="text" id="adminCode" name="adminCode" class="form-control" @if (ViewBag.admin == "true") {@Html.Raw("disabled")} else { @Html.Raw("enabled"); }/>
-            </div>
-            <div class="col-md-5">
-                <input type="submit" id="verify" value="Verify" class="btn btn-default" @if (ViewBag.admin == "true") {@Html.Raw("disabled")} else { @Html.Raw("enabled"); }/>
-            </div>
-            <div class="col-md-offset-2 col-md-5">
-                <span class="text-danger">@Html.Raw(ViewBag.AdminCodeError)</span>
-            </div>
-        </div>
-    </div>
-    }
-    @using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
         <div class="form-horizontal">
             <div class="form-group">
                 <div class="control-label col-md-2">
-                    <label id="fileLabel" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}> File: </label>
+                    <label> Admin Code: </label>
                 </div>
                 <div class="col-md-5">
-                    <label id="customUpload" for="uploadFile" class="custom-file-upload" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}>
-                        Browse
-                        <input id="uploadFile" type="file" name="uploadFile" style="display:none" @if (ViewBag.admin == "true") {@Html.Raw("enabled")} else { @Html.Raw("disabled"); }/>
-                    </label>
-                    <span id="uploadMsg" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")}> Choose your excel file </span>
+                    <input type="text" id="adminCode" name="adminCode" class="form-control" @if (ViewBag.admin == "true") { @Html.Raw("disabled") } else { @Html.Raw("enabled") ; } />
                 </div>
-                <div class="col-md-offset-2 col-md-10">
-                    <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
+                <div class="col-md-5">
+                    <input type="submit" id="verify" value="Verify" class="btn btn-default" @if (ViewBag.admin == "true") { @Html.Raw("disabled") } else { @Html.Raw("enabled") ; } />
+                </div>
+                <div class="col-md-offset-2 col-md-5">
+                    <span class="text-danger">@Html.Raw(ViewBag.AdminCodeError)</span>
                 </div>
             </div>
+        </div>
+            }
+
+    @* try to let it load upon entering home page *@
+    @using (Html.BeginForm("Sync", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" id="fileSubmit" value="Update" class="btn btn-default" @if (ViewBag.admin == "true") {@Html.Raw("style=\"display:initial\"")} else { @Html.Raw("style=\"display:none\"")} @if (ViewBag.admin == "true") {@Html.Raw("enabled")} else { @Html.Raw("disabled"); }/>
+                    <button type="submit" id="syncBtn" class="btn btn-default" @if (ViewBag.admin == "true") { @Html.Raw("style=\"display:initial\"") } else { @Html.Raw("style=\"display:none\"") }>Synchronize Data</button>
                 </div>
+
             </div>
         </div>
     }
@@ -75,4 +63,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-   
+
