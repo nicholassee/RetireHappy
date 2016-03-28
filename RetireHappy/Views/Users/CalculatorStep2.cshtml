@@ -62,7 +62,7 @@
             <div class="col-md-5">
                 @*@Html.RadioButton("Gender", "Male", new { @checked = true})*@
                 @*<input id="manBtn" type="radio" value="1" name="expTypeGroup" checked="checked"/>*@
-                    @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn" })
+                    @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn", @Checked = "checked" })
                     <div id="avgExpInput"> @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })</div>
                     @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
             </div>

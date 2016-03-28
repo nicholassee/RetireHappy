@@ -13,17 +13,16 @@ namespace RetireHappy.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class UserProfile
+    public partial class UserProfile 
     {
         public int Id { get; set; }
         public Nullable<int> mId { get; set; }
-        [Display(Name = "What is your age?")]
+        [Display(Name = "Your age")]
         [Range(12, 99)]
         [Required]
         public Nullable<int> age { get; set; }
 
         [Display(Name = "What is your gender?")]
-        [Required(ErrorMessage = "Please select your gender")]
         public string gender { get; set; }
 
         [Display(Name = "Your Expected Retirement Age")]
@@ -43,6 +42,7 @@ namespace RetireHappy.Models
         [Display(Name = "Monthly Expenditure")]
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public Nullable<double> avgMonExpenditure { get; set; }
+        
 
         [Display(Name = "Current Monthly Savings Amount")]
         [Required]

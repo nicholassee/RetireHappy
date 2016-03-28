@@ -11,27 +11,31 @@
         .dataTables_wrapper .dataTables_length {
             float: right;
         }
+
         .dataTables_wrapper .dataTables_filter {
             float: left;
             text-align: left;
         }
+
         table.dataTable thead .sorting_asc {
-          background: url("..Content/DataTables/images/sort_asc.png") no-repeat center left;
+            background: url("..Content/DataTables/images/sort_asc.png") no-repeat center left;
         }
+
         table.dataTable thead .sorting_desc {
-          background: url("..Content/DataTables/images/sort_desc.png") no-repeat center left;
+            background: url("..Content/DataTables/images/sort_desc.png") no-repeat center left;
         }
+
         table.dataTable thead .sorting {
-          background: url("..Content/DataTables/images/sort_both.png") no-repeat center left;
+            background: url("..Content/DataTables/images/sort_both.png") no-repeat center left;
         }
     </style>
 }
 
 @section scripts
 {
-<script type="text/javascript" src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/expenditure.js")"></script>
-<script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/expenditure.js")"></script>
+    <script>
     $(document).ready(function () {
         $('#expenditureTable').DataTable({
             "columns": [
@@ -42,47 +46,63 @@
             ]
         });
     });
-</script>
+    </script>
 }
 
-<h2>Add Expenditures</h2>
-
-<div class="col-lg-4 col-md-6 pull-right">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-3">
-                    <i class="fa fa-shopping-cart fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                    <div>Total Amount</div>
-                    <div class="huge">$<span id="totalAmt">0</span></div>
+<div class="container">
+    <div class="col-md-7">
+        <h2>Add Expenditures</h2>
+    </div>
+    <div class="col-md-3 pull-right">
+        <div class="panel">
+            <div class="panel-heading" style="background-color:lightskyblue">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-shopping-cart fa-4x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div style="font-size:large">Total Amount</div>
+                        <div style="font-size:medium; font-weight:bold">$<span id="totalAmt">0</span></div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div>
+                <a id="detail" href="#" data-toggle="collapse" data-target="#selectList">
+                    <div class="panel-body">
+                        <span class="pull-left" id="NumItems">View Selected(0)</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                   
+                    </div>
+                </a>
+                <div id="selectList" class="collapse">
+                    <ul id="expList" style="font-size:12px"></ul>
+                </div>
+                <div class="span4">
+                    @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
+                    {
+                        <button class="btn btn-outline btn-info btn-block"  data-request-url="@Url.Action("Tabulate", "Expenditure")"  type="submit" id="Done" disabled>Done</button>
+                    }
+                </div>
 
-        <a id="detail" href="#" data-toggle="collapse" data-target="#selectList">
-            <div class="panel-footer">
-                <span class="pull-left" id="NumItems">View Selected(0)</span>
-                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          </div>
+            @*<div class="panel-footer">
+                <div id="selectList" class="collapse">
+                    <ul id="expList" style="font-size:10px"></ul>
+                </div>
+                <span class="pull-right">
+                    @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
+                    {
+                        <button class="btn btn-outline btn-info btn-sm" data-request-url="@Url.Action("Tabulate", "Expenditure")" style="float:right" type="submit" id="Done" disabled>Done</button>
+                    }
+                </span>
                 <div class="clearfix"></div>
-            </div>
-        </a>
-        <div class="panel-footer">
-            <div id="selectList" class="collapse">
-                <ul id="expList" style="font-size:10px"></ul>
-            </div>
-            <span class="pull-right">
-                @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
-                {
-                    <button class="btn btn-outline btn-info btn-sm" data-request-url="@Url.Action("Tabulate", "Expenditure")" style="float:right" type="submit" id="Done" disabled>Done</button>
-                }
-            </span>
-            <div class="clearfix"></div>
-        </div>
+            </div>*@
 
+        </div>
     </div>
 </div>
+
 
 <table id="expenditureTable" class="display" cellspacing="0">
     <thead>

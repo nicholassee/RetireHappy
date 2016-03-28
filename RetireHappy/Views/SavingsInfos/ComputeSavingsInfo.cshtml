@@ -6,12 +6,15 @@
 
 <h1 class="page-header">Retirement Calculator</h1>
 
-<p><strong>Step 4! Done!</strong></p>
+<p><strong>You're Done!</strong></p>
 
-<div>
+<div >
     <hr />
+    
     <h4>Your ideal monthly savings should be...</h4>
-    <div class="col-md-10">
+
+    <div class="container col-md-8">
+    <div >
 
         <div class="panel @ViewBag.riskClass">
             <div class="panel-heading">
@@ -29,7 +32,10 @@
         </div>
 
     </div>
-    <div class="col-md-10">
+ 
+
+
+    <div>
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.riskLevel)
@@ -64,4 +70,44 @@
 
         </dl>
     </div>
+
+        
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-calculator fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-center">
+                        <h3>Summary</h3>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <dl>
+                    <dt>Age</dt>
+                    <dd>@HttpContext.Current.Session["age"].ToString()</dd>
+                    <dt>Monthly Income</dt>
+                    <dd>$@HttpContext.Current.Session["monIncome"].ToString()</dd>
+                    <dt>Average Expenditure</dt>
+                    <dd>$@HttpContext.Current.Session["avgMonExpenditure"].ToString()</dd>
+                    <dt>Monthly Savings</dt>
+                    <dd>$@HttpContext.Current.Session["curSavingAmt"].ToString()</dd>
+                    <dt>Desired Retirement Income</dt>
+                    <dd>$@HttpContext.Current.Session["desiredMonRetInc"].ToString()</dd>
+                    <dt>Inflation Rate</dt>
+                    <dd>@HttpContext.Current.Session["inflationRate"].ToString()</dd>
+                </dl>
+            </div>
+        </div>
+
+   </div>
+        
+
 </div>

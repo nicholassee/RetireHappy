@@ -34,7 +34,7 @@
                     <label> Admin Code: </label>
                 </div>
                 <div class="col-md-5">
-                    <input type="text" id="adminCode" name="adminCode" class="form-control" @if (ViewBag.admin == "true") { @Html.Raw("disabled") } else { @Html.Raw("enabled") ; } />
+                    <input type="password" id="adminCode" name="adminCode" class="form-control" @if (ViewBag.admin == "true") { @Html.Raw("disabled") } else { @Html.Raw("enabled") ; } />
                 </div>
                 <div class="col-md-5">
                     <input type="submit" id="verify" value="Verify" class="btn btn-default" @if (ViewBag.admin == "true") { @Html.Raw("disabled") } else { @Html.Raw("enabled") ; } />

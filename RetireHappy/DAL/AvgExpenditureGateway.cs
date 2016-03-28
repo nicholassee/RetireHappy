@@ -60,6 +60,7 @@ namespace RetireHappy.DAL
                                        FileShare.ReadWrite));
                                     ISheet ws = wb.GetSheetAt(16);
                                     ProcessWorksheet(ws);
+                                    stream.Close();
                                     return true;
                                 }
                                 catch (Exception a)
