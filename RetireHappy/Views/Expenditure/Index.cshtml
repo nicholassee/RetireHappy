@@ -71,10 +71,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.type)
+                @Html.DisplayNameFor(model => model.category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.category)
+                @Html.DisplayNameFor(model => model.type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.avgAmount)
@@ -87,17 +87,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.type)
+                    @Html.DisplayFor(modelItem => item.category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.category)
+                    @Html.DisplayFor(modelItem => item.type)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.avgAmount)
                 </td>
                 <td>
-                    <button class="btn btn-outline btn-default" id="AddBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)">Add</button>
-                    <button class="btn btn-outline btn-info " id="RemBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)" style="display:none;">Remove</button>
+                    <button class="btn btn-outline btn-default" id="AddBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)?@Html.Raw(item.type)?@Html.Raw(item.avgAmount)">Add</button>
+                    <button class="btn btn-outline btn-info " id="RemBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)?@Html.Raw(item.type)?@Html.Raw(item.avgAmount)" style="display:none;">Remove</button>
                 </td>
 
             </tr>

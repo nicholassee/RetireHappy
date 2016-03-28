@@ -36,9 +36,9 @@
             
             //updating text fields in View
             var text = $(this).val();
-            var arr = text.split('-');
+            var arr = text.split('?');
             var tempAmt = parseFloat(arr[2]);//get from button value
-            var initAmtstr = document.getElementById('totalAmt').innerText;//
+            var initAmtstr = document.getElementById('totalAmt').innerText;
             var initAmt = parseFloat(initAmtstr);
 
             //modifying Buttons in View
@@ -72,13 +72,10 @@
             //updating text fields in View
             
             var text = $(this).val();
-            var arr = text.split('-');
+            var arr = text.split('?');
             var tempAmt = parseFloat(arr[2]);
             var initAmtstr = document.getElementById('totalAmt');
             var initAmt = parseFloat(initAmtstr.innerText);
-            
-            alert("Removing" + addCount);
-
             
             if ((addCount-1) >= -1) {
                 var end = initAmt - tempAmt.toFixed(2);
