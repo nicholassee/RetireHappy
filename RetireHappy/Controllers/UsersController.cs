@@ -52,7 +52,8 @@ namespace RetireHappy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate, ifUseAvgExp")] UserProfile userProfile)
         {
-            if (userProfile.age == null)
+            if (userProfile.age == null || userProfile.monIncome == null || userProfile.curSavingAmt == null ||
+                ( !Convert.ToBoolean(userProfile.ifUseAvgExp) && userProfile.avgMonExpenditure == null ) )
             {
                 //Return the same page with error massage
                 return View();
@@ -65,6 +66,8 @@ namespace RetireHappy.Controllers
                 Session["avgMonExpenditure"] = userProfile.avgMonExpenditure;
                 Session["inflationRate"] = userProfile.inflationRate;
                 Session["ifUseAvgExp"] = userProfile.ifUseAvgExp;
+
+                //If user choose to key in his own expenditure amount
                 if (Convert.ToBoolean(userProfile.ifUseAvgExp) == false)
                 {
                     return RedirectToAction("CalculatorStep3");

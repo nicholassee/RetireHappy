@@ -4,22 +4,33 @@
     ViewBag.Title = "Calculator Step 2";
 }
 
-<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+@section scripts
+{
 <script>
     $(document).ready(function () {
+
+        if ($("#useAvgBtn").is(":checked"))
+        {
+            $("#avgExpInput *").prop('disabled', false);
+            $("span[data-valmsg-for='avgMonExpenditure']").hide();
+            $("#avgExpInput *").hide();
+        }
+
         $("#manBtn").click(function () { //avgExpInput
             $("#avgExpInput *").prop('disabled', false);
-
+            $("#avgExpInput *").slideDown();
         });
 
         $("#useAvgBtn").click(function () {
             $("#avgExpInput *").prop('disabled', true);
-
+            $("#avgExpInput *").slideUp();
         });
 
     });
 
 </script>
+}
+
 <h1 class="page-header">Retirement Calculator</h1>
 
 <p><strong>Step 2</strong></p>
@@ -62,14 +73,17 @@
             <div class="col-md-5">
                 @*@Html.RadioButton("Gender", "Male", new { @checked = true})*@
                 @*<input id="manBtn" type="radio" value="1" name="expTypeGroup" checked="checked"/>*@
-                    @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn", @Checked = "checked" })
-                    <div id="avgExpInput"> @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })</div>
-                    @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
+
+                @Html.RadioButtonFor(model => model.ifUseAvgExp, "false", new { @id = "manBtn", @Checked = "checked" })
+                <label>Key in your total expenditure</label>
+                <div id="avgExpInput"> @Html.EditorFor(model => model.avgMonExpenditure, new { htmlAttributes = new { @class = "form-control" } })</div>
+                @Html.ValidationMessageFor(model => model.avgMonExpenditure, "", new { @class = "text-danger" })
             </div>
          
             <div class="col-md-offset-2 col-md-10">
+                <label>OR</Label>
                 <br />
-                @Html.RadioButtonFor(model => model.ifUseAvgExp, "true", new { @id = "useAvgBtn" }) <Label>Choose from national average list</Label>
+                @Html.RadioButtonFor(model => model.ifUseAvgExp, "true", new { @id = "useAvgBtn" }) <label>Choose from national average list</label>
                 @*<div class="radio-selector">
 
                 @Html.RadioButtonFor(model => model.gender, "Male", new { @id = "male" })
@@ -119,8 +133,4 @@
             </div>
         </div>
     </div>
-                    }
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                }

@@ -32,6 +32,7 @@ namespace RetireHappy.Models
 
         [Display(Name = "Retirement Duration(years)")]
         [Range(1, 99)]
+        [Required]
         public Nullable<int> retDuration { get; set; }
 
         [Display(Name = "Your Monthly Take Home Pay")]
@@ -41,6 +42,7 @@ namespace RetireHappy.Models
 
         [Display(Name = "Monthly Expenditure")]
         [Range(0d, (double)decimal.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
+        [Required]
         public Nullable<double> avgMonExpenditure { get; set; }
         
 

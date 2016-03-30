@@ -60,7 +60,7 @@
             }
             else {
                 
-                alert("Added "+(addCount)+" Items already!");
+                alert("Sorry, you are limited to adding up to "+(addCount)+" items only!");
             }
             //addCount++;
         });
@@ -103,6 +103,25 @@
         // Prevent default behaviour
         $('a#detail').click(function (e) {
             e.preventDefault();
+        });
+
+        // Datatable API Call
+        $('#expenditureTable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                { "orderable": false }
+            ]
+        });
+
+        // Shopping Cart remains position when scrolling
+        var $scrollingDiv = $("#scrollingDiv");
+
+        $(window).scroll(function () {
+            $scrollingDiv
+				.stop()
+				.animate({ "marginTop": ($(window).scrollTop() + 30) + "px" }, "slow");
         });
 
     });
