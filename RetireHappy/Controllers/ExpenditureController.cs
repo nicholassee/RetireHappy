@@ -11,7 +11,7 @@ using RetireHappy.Models;
 
 namespace RetireHappy.Controllers
 {
-    public class ExpenditureController : Controller
+    public class ExpenditureController : MemberCheckingController
     {
         ExpenditureGateway expGW = new ExpenditureGateway();
         MemberGateway memberGateway = new MemberGateway();
@@ -30,12 +30,10 @@ namespace RetireHappy.Controllers
             }
             return View(avgExpItemList.ToList());
         }
-        
+
 
         public ActionResult Tabulate(String idArr)
         {
-
-
             ExpenditureList newExpObj = new ExpenditureList();
             newExpObj.updateList(idArr);
             double totalAmt = newExpObj.calcTotalExpenditure();
@@ -43,14 +41,16 @@ namespace RetireHappy.Controllers
             Session["avgMonExpenditure"] = 0;
             Session["avgMonExpenditure"] = totalAmt;
 
+            Boolean isMember = checkIfMember();
+
             // only save expenditure list if member
-            if (!string.IsNullOrEmpty((string)Session["userType"]))
+            if (isMember) //if user is a member
             {
                 //push to db
                 newExpObj.mId = (int)Session["memberId"];
                 ExpenditureList tempExpList = expGW.checkExistingExpList(newExpObj.mId);
                 //default value for null obj
-                if(tempExpList.mId == 0)
+                if (tempExpList.mId == 0)
                 {
                     // if no existing expenditure list, insert new
                     expGW.Insert(newExpObj);
@@ -60,13 +60,11 @@ namespace RetireHappy.Controllers
                     // else update old list
                     expGW.updateExpenditureList(newExpObj);
                 }
-                
+
             }
             // if not a member, not required to save expenditure list
-            
+
             return RedirectToAction("CalculatorStep3", "Users");
         }
-
-
     }
 }

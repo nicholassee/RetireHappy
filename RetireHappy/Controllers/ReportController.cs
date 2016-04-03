@@ -13,12 +13,11 @@ namespace RetireHappy.Controllers
     public class ReportController : Controller
     {
         private RetireHappyContext db = new RetireHappyContext();
-        private ReportMapper reportMapper = new ReportMapper();
 
         // GET: Report
         public ActionResult Index()
         {
-            Report report = new Report();
+            IReport report = new Report();
             report.updateData();
             return View(report);
         }
@@ -26,7 +25,7 @@ namespace RetireHappy.Controllers
         // GET: Report
         public ActionResult Table()
         {
-            Report report = new Report();
+            IReport report = new Report();
             report.updateData();
             return View(report);
         }
@@ -34,8 +33,7 @@ namespace RetireHappy.Controllers
         public ActionResult ExportData()
         {
             //http://www.c-sharpcorner.com/UploadFile/rahul4_saxena/export-data-table-to-excel-in-Asp-Net-mvc-4/
-            //Report report = (Report)reportMapper.retrieveInfo();
-            Report report = new Report();
+            IReport report = new Report();
             report.updateData();
 
             DataTable dt1 = new DataTable();

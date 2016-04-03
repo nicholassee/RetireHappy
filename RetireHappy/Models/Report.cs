@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RetireHappy.Models
 {
-    public class Report
+    public class Report : IReport
     {
         public int cRID { get; set; }
         public int year { get; set; }
@@ -30,7 +30,7 @@ namespace RetireHappy.Models
         public void updateData()
         {
 
-            ReportMapper reportMapper = new ReportMapper();
+            IReportMapper reportMapper = new ReportMapper();
             year = Int32.Parse(reportMapper.retrieveInfo(-1));
             male = Int32.Parse(reportMapper.retrieveInfo(0));
             female = Int32.Parse(reportMapper.retrieveInfo(1));
@@ -46,8 +46,6 @@ namespace RetireHappy.Models
             ageRange_35_44 = Double.Parse(reportMapper.retrieveInfo(11));
             ageRange_45_54 = Double.Parse(reportMapper.retrieveInfo(12));
             ageRange_55_64 = Double.Parse(reportMapper.retrieveInfo(13));
-
-
 
         }
     }

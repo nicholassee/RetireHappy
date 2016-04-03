@@ -233,6 +233,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ExpenditureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MemberCheckingController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SavingsInfosController.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="DAL\CommonGateway.cs" />
     <Compile Include="DAL\ExpenditureGateway.cs" />
     <Compile Include="DAL\ICommonGateway.cs" />
+    <Compile Include="DAL\IReportMapper.cs" />
     <Compile Include="DAL\MemberGateway.cs" />
     <Compile Include="DAL\ReportMapper.cs" />
     <Compile Include="DAL\RetireHappyContext.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="Models\ExpenditureList.cs">
       <DependentUpon>RetireHappyContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IReport.cs" />
     <Compile Include="Models\Member.cs">
       <DependentUpon>RetireHappyContext.tt</DependentUpon>
     </Compile>
@@ -723,6 +726,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\MemberChecking\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

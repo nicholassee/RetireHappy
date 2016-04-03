@@ -15,63 +15,52 @@ namespace RetireHappy.DAL
     {
         public bool SyncDataset()
         {
-            string url = "http://www.singstat.gov.sg/publications/household-expenditure-survey";
-            string dwlLink = "www.singstat.gov.sg";
-            //reference from https://zenpad.wordpress.com/2015/01/22/reading-or-writing-excel-files-using-c/
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-            request.UserAgent = "A .NET Web Crawler";
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(stream);
-            string htmlText = reader.ReadToEnd();
+            WebRequest myWebRequest;
+            WebResponse myWebResponse;
+            string dwlLink = "http://www.singstat.gov.sg";
 
-            // this part does the parsing of the website for the href containing the excel.xls
+            Console.WriteLine("1\n");
+            myWebRequest = WebRequest.Create("http://www.singstat.gov.sg/publications/household-expenditure-survey");
+            myWebResponse = myWebRequest.GetResponse();//Returns a response from an Internet resource
 
-            Regex regex = new Regex("href\\s*=\\s*(?:\"(?<1>[^\"]*)\"|(?<1>\\S+))", RegexOptions.IgnoreCase);
-            Match match;
-            int count = 0;
-            for (match = regex.Match(htmlText); match.Success; match = match.NextMatch())
+            Stream streamResponse = myWebResponse.GetResponseStream();//return the data stream from the internet
+                                                                      //and save it in the stream
+
+            //Console.Write("2\n");
+            StreamReader sreader = new StreamReader(streamResponse);//reads the data stream
+            string Rstring = sreader.ReadToEnd();//reads it to the end
+
+            //Console.Write("3\n");
+            string Links = getExcelLink(Rstring);//gets the links only
+            streamResponse.Close();
+            sreader.Close();
+            myWebResponse.Close();
+
+            string strippedLink = Links.Replace("href=", "");
+            strippedLink = strippedLink.Replace("\"", "");
+
+
+            dwlLink = dwlLink + strippedLink;
+            using (WebClient client = new WebClient())
             {
-                //Console.WriteLine("Found a href. Groups: ");
-                foreach (Group group in match.Groups)
+                try
                 {
-                    if (group.ToString().Contains("excel.xls"))
-                    {
-                        if (count == 1)
-                        {
-                            Console.WriteLine("FOUND!: {0}", group);
-                            dwlLink = dwlLink + group.ToString();
-                            string newLink = dwlLink.Trim();
-                            using (WebClient client = new WebClient())
-                            {
-                                try
-                                {
-                                    // to make download link a recognizable address
-                                    newLink = "http://" + newLink;
-                                    string path = HostingEnvironment.MapPath("~/Content/dataset.xls");
-                                    client.DownloadFile(newLink, path);
-                                    IWorkbook wb = WorkbookFactory.Create(new FileStream(
-                                       Path.GetFullPath(path),
-                                       FileMode.Open, FileAccess.Read,
-                                       FileShare.ReadWrite));
-                                    ISheet ws = wb.GetSheetAt(16);
-                                    ProcessWorksheet(ws);
-                                    
-                                    stream.Close();
-                                    return true;
-                                }
-                                catch (Exception a)
-                                {
-                                    Console.Write(a);
-                                    return false;
-                                }
-                            }
-                        }
-                        count++;
-                    }
+                    string path = HostingEnvironment.MapPath("~/Content/dataset.xls");
+                    client.DownloadFile(dwlLink, path);
+                    IWorkbook wb = WorkbookFactory.Create(new FileStream(
+                        Path.GetFullPath(path),
+                        FileMode.Open, FileAccess.Read,
+                        FileShare.ReadWrite));
+                    ISheet ws = wb.GetSheetAt(16);
+                    ProcessWorksheet(ws);
+                    return true;
+                }
+                catch (Exception a)
+                {
+                    Console.Write(a);
+                    return false;
                 }
             }
-            return false;
 
         }
 
@@ -122,6 +111,24 @@ namespace RetireHappy.DAL
                     }
                 }
             }
+        }
+
+        public static string getExcelLink(string content) {
+            Regex regexLink = new Regex("href\\s*=\\s*(?:\"(?<1>[^\"]*)\"|(?<1>\\S+))", RegexOptions.IgnoreCase);//new Regex("(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))");
+
+            
+            string excelLink = null;
+            foreach (var match in regexLink.Matches(content))
+            {
+                Console.WriteLine(match.ToString());
+                //Console.Write("4\n");
+                if (match.ToString().Contains(".xls")) {
+                    //Console.Write("4.1\n");
+                    return match.ToString();
+                }
+            }
+            //Console.Write("4.2\n");
+            return excelLink;
         }
 
         public int CheckIfExist(string category, string type)

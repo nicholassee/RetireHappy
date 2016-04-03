@@ -7,7 +7,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace RetireHappy.DAL
 {
-    public class ReportMapper
+    public class ReportMapper : IReportMapper
     {
 
         

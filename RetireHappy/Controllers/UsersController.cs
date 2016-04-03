@@ -11,7 +11,7 @@ using RetireHappy.Models;
 
 namespace RetireHappy.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : MemberCheckingController
     {
         private RetireHappyContext db = new RetireHappyContext();
         private UserGateway userGateway = new UserGateway();
@@ -53,7 +53,7 @@ namespace RetireHappy.Controllers
         public ActionResult CalculatorStep2([Bind(Include = "age,monIncome,curSavingAmt,avgMonExpenditure,inflationRate, ifUseAvgExp")] UserProfile userProfile)
         {
             if (userProfile.age == null || userProfile.monIncome == null || userProfile.curSavingAmt == null ||
-                ( !Convert.ToBoolean(userProfile.ifUseAvgExp) && userProfile.avgMonExpenditure == null ) )
+                (!Convert.ToBoolean(userProfile.ifUseAvgExp) && userProfile.avgMonExpenditure == null))
             {
                 //Return the same page with error massage
                 return View();
@@ -103,13 +103,11 @@ namespace RetireHappy.Controllers
             userProfile.inflationRate = (double)Session["inflationRate"];
             userProfile.timestamp = DateTime.Now;
             userProfile.ifUseAvgExp = (string)Session["ifUseAvgExp"];
-            // ** ATTN JERLYN ** this check is not needed as both methods of expenditure stores in the same session variable hence
-            // it will contain values
-            //if (Convert.ToBoolean(userProfile.ifUseAvgExp) == true)
-            //{
-            // userProfile.avgMonExpenditure = (float)Session["avgMonExpenditure"];
-            //}
-            if(!string.IsNullOrEmpty((string)Session["userType"]))
+
+
+            Boolean isMember = checkIfMember();
+
+            if (isMember)
             {
                 userProfile.mId = (int)Session["memberId"];
                 UserProfile tempUserProfile = userGateway.checkIfExistUserProfile((int)userProfile.mId);
@@ -132,11 +130,12 @@ namespace RetireHappy.Controllers
             {
                 userGateway.Insert(userProfile);
             }
-            
-            
+
+
             Session["Id"] = userProfile.Id;
             return RedirectToAction("ComputeSavingsInfo", "SavingsInfos");
         }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -14,13 +14,9 @@ namespace RetireHappy.Controllers
     public class MemberController : Controller
     {
         private RetireHappyContext db = new RetireHappyContext();
-        //private MemberGateway memberGateway = new MemberGateway();
-        //private ExpenditureGateway expenditureGateway = new ExpenditureGateway();
-        //private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
-        //private ICommonGateway<T> commonGateway; or this? but this has error of object being null
-        private ICommonGateway<Member> memberGateway = new MemberGateway();
-        private ICommonGateway<ExpenditureList> expenditureGateway = new ExpenditureGateway();
-        private ICommonGateway<AvgExpenditure> avgExpenditureGateway = new AvgExpenditureGateway();
+        private MemberGateway memberGateway = new MemberGateway();
+        private ExpenditureGateway expenditureGateway = new ExpenditureGateway();
+        private AvgExpenditureGateway avgExpenditureGateway = new AvgExpenditureGateway();
 
         // GET: Member/Register
         public ActionResult Register()
