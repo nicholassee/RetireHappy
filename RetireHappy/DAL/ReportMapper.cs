@@ -9,14 +9,12 @@ namespace RetireHappy.DAL
 {
     public class ReportMapper
     {
-        //private IObjectContextAdapter ctx;
-        //do overloading, one to return int another, double
-              
 
+        
         private static int currentYear = DateTime.Now.Year;
         private static int previousYear = currentYear - 1;
         private static int nextYear = currentYear + 1;
-
+        RetireHappyContext db = new RetireHappyContext();
         List<string> sql = new List<string>(
             new string[] {
                 "SELECT COUNT(*) FROM UserProfile where Gender='Male' AND timestamp > '" + previousYear + "' AND timestamp < '" + nextYear + "'",
@@ -34,48 +32,39 @@ namespace RetireHappy.DAL
                 "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 45 AND 54",
                 "SELECT AVG(calcRetSavings) FROM UserProfile LEFT JOIN SavingsInfo ON UserProfile.Id = SavingsInfo.Id WHERE age BETWEEN 55 AND 64"
             });
-
+        
         //public Report retrieveInfo()
         public String retrieveInfo(int ind)
         {
-            RetireHappyContext db = new RetireHappyContext();
-       
-
-            using (db) {
-                if (ind == -1)
-                {
-                    return currentYear.ToString();
-                }
-                else if (ind >= 0 && ind <= 1)
-                {
-                    try {
-                        int res = db.Database.SqlQuery<int>(sql.ElementAt(ind)).Single();
-                        return res.ToString();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Write(e);
-                        return "0.0";
-                    }  
-                }
-                else
-                {
-                    var temp = db.Database.SqlQuery<double?>(sql.ElementAt(ind)).FirstOrDefault();
-                    double res = 0.0;
-
-                    if (temp != null)
-                    {
-                        res = Convert.ToDouble(temp);
-                    }
-                    
-                    res= Math.Round(res, 2);
+            if (ind == -1)
+            {
+                return currentYear.ToString();
+            }
+            else if (ind >= 0 && ind <= 1)
+            {
+                try {
+                    int res = db.Database.SqlQuery<int>(sql.ElementAt(ind)).Single();
                     return res.ToString();
                 }
+                catch (Exception e)
+                {
+                    Console.Write(e);
+                    return "0.0";
+                }  
             }
+            else
+            {
+                var temp = db.Database.SqlQuery<double?>(sql.ElementAt(ind)).FirstOrDefault();
+                double res = 0.0;
 
-           
-           
-           
+                if (temp != null)
+                {
+                    res = Convert.ToDouble(temp);
+                }
+                    
+                res= Math.Round(res, 2);
+                return res.ToString();
+            }
         }
         
     }

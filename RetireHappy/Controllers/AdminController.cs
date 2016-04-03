@@ -43,10 +43,7 @@ namespace RetireHappy.Controllers
         [HttpPost]
         public ActionResult Sync()
         {
-            string url = "http://www.singstat.gov.sg/publications/household-expenditure-survey";
-            string dwlLink = "www.singstat.gov.sg";
-
-            bool result = avgExpenditureGateway.SyncDataset(url, dwlLink);
+            bool result = avgExpenditureGateway.SyncDataset();
             if (result) {
                 ViewBag.SuccessMsg = "Data has been updated";
             }

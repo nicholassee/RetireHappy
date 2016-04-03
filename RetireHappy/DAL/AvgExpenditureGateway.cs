@@ -13,14 +13,10 @@ namespace RetireHappy.DAL
 {
     public class AvgExpenditureGateway : CommonGateway<AvgExpenditure>
     {
-        public void deleteAll()
+        public bool SyncDataset()
         {
-            string query = "DELETE FROM AvgExpenditure";
-            db.Database.ExecuteSqlCommand(query);
-        }
-
-        public bool SyncDataset(string url, string dwlLink)
-        {
+            string url = "http://www.singstat.gov.sg/publications/household-expenditure-survey";
+            string dwlLink = "www.singstat.gov.sg";
             //reference from https://zenpad.wordpress.com/2015/01/22/reading-or-writing-excel-files-using-c/
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             request.UserAgent = "A .NET Web Crawler";
@@ -60,6 +56,7 @@ namespace RetireHappy.DAL
                                        FileShare.ReadWrite));
                                     ISheet ws = wb.GetSheetAt(16);
                                     ProcessWorksheet(ws);
+                                    
                                     stream.Close();
                                     return true;
                                 }
