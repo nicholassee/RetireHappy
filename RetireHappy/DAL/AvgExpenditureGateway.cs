@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Hosting;
 
 namespace RetireHappy.DAL
@@ -18,35 +17,50 @@ namespace RetireHappy.DAL
             WebRequest myWebRequest;
             WebResponse myWebResponse;
             string dwlLink = "http://www.singstat.gov.sg";
-
-            Console.WriteLine("1\n");
+            string excelLink = "";
+           
             myWebRequest = WebRequest.Create("http://www.singstat.gov.sg/publications/household-expenditure-survey");
-            myWebResponse = myWebRequest.GetResponse();//Returns a response from an Internet resource
 
-            Stream streamResponse = myWebResponse.GetResponseStream();//return the data stream from the internet
-                                                                      //and save it in the stream
+            myWebRequest.Timeout = 10000; //10 000 miliseconds = 10 seconds
 
-            //Console.Write("2\n");
-            StreamReader sreader = new StreamReader(streamResponse);//reads the data stream
-            string Rstring = sreader.ReadToEnd();//reads it to the end
+            try {
+                myWebResponse = myWebRequest.GetResponse();//Returns a response from an Internet resource
 
-            //Console.Write("3\n");
-            string Links = getExcelLink(Rstring);//gets the links only
-            streamResponse.Close();
-            sreader.Close();
-            myWebResponse.Close();
+                Stream streamResponse = myWebResponse.GetResponseStream();//return the data stream from the internet
+                                                                          //and save it in the stream
 
-            string strippedLink = Links.Replace("href=", "");
-            strippedLink = strippedLink.Replace("\"", "");
+                StreamReader sreader = new StreamReader(streamResponse);//reads the data stream
+                string Rstring = sreader.ReadToEnd();//reads it to the end
+
+               
+                excelLink = getExcelLink(Rstring);//gets the links only
+                streamResponse.Close();
+                sreader.Close();
+                myWebResponse.Close();
+
+                excelLink = excelLink.Replace("href=", "");
+                excelLink = excelLink.Replace("\"", "");
 
 
-            dwlLink = dwlLink + strippedLink;
+                dwlLink = dwlLink + excelLink;
+                bool res = DownloadFromLink(dwlLink);
+
+                return res;
+            }
+            catch (WebException webExc) {
+                return false;
+            }
+
+        }
+
+        public bool DownloadFromLink(string excelLink) {
+
             using (WebClient client = new WebClient())
             {
                 try
                 {
                     string path = HostingEnvironment.MapPath("~/Content/dataset.xls");
-                    client.DownloadFile(dwlLink, path);
+                    client.DownloadFile(excelLink, path);
                     IWorkbook wb = WorkbookFactory.Create(new FileStream(
                         Path.GetFullPath(path),
                         FileMode.Open, FileAccess.Read,
@@ -61,7 +75,6 @@ namespace RetireHappy.DAL
                     return false;
                 }
             }
-
         }
 
         public void ProcessWorksheet(ISheet ws)
@@ -121,13 +134,13 @@ namespace RetireHappy.DAL
             foreach (var match in regexLink.Matches(content))
             {
                 Console.WriteLine(match.ToString());
-                //Console.Write("4\n");
+               
                 if (match.ToString().Contains(".xls")) {
-                    //Console.Write("4.1\n");
+                    
                     return match.ToString();
                 }
             }
-            //Console.Write("4.2\n");
+            
             return excelLink;
         }
 

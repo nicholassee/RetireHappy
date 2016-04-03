@@ -25,7 +25,8 @@
 
 <h1 class="page-header">Update Data</h1>
 <div>
-    <h3 class="text-success">@Html.Raw(ViewBag.SuccessMsg)</h3>
+    <h2 class="text-success">@Html.Raw(ViewBag.SuccessMsg)</h2>
+    <h2 class="text-danger">@Html.Raw(ViewBag.Error)</h2>
     @using (Html.BeginForm("Verify", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="form-horizontal">

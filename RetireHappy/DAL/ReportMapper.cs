@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using RetireHappy.Models;
-using System.Data.Entity.Infrastructure;
 
 namespace RetireHappy.DAL
 {

@@ -1,6 +1,5 @@
 ﻿using RetireHappy.DAL;
 using System;
-using System.Collections.Generic;
 
 namespace RetireHappy.Models
 {
